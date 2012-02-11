@@ -1,0 +1,554 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: VAuto 1.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-09-14 21:41+0100\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Kvi <kovihome@freemail.hu>\n"
+"Language-Team: Kovi <kovihome@freemail.hu>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Hungarian\n"
+"X-Poedit-Country: HUNGARY\n"
+"X-Poedit-SourceCharset: iso-8859-2\n"
+"X-Poedit-Basepath: C:\\projects\\VAuto\\locale\\hu\\LC_MESSAGES\n"
+"X-Poedit-KeywordsList: _\n"
+"X-Poedit-SearchPath-0: ..\\..\\..\\src\n"
+
+#: ..\..\..\src/CameraFactory.cpp:43
+msgid "No camera"
+msgstr "Nincs kamera"
+
+#: ..\..\..\src/CameraFactory.cpp:45
+msgid "Canon EOS USB"
+msgstr "Canon EOS USB"
+
+#: ..\..\..\src/CameraFactory.cpp:47
+msgid "Canon EOS Shutter"
+msgstr "Canon EOS Shutter"
+
+#: ..\..\..\src/CameraFactory.cpp:48
+#: ..\..\..\src/TelescopeFactory.cpp:54
+msgid "Unknown"
+msgstr "Ismeretlen"
+
+#: ..\..\..\src/OptionsDialog.cpp:153
+#: ..\..\..\src/VAutoDialog.cpp:872
+msgid "Camera:"
+msgstr "Kamera:"
+
+#: ..\..\..\src/OptionsDialog.cpp:155
+#: ..\..\..\src/VAutoDialog.cpp:877
+msgid "Mount: "
+msgstr "Távcső:"
+
+#: ..\..\..\src/TelescopeFactory.cpp:45
+msgid "No telescope"
+msgstr "Nincs távcső"
+
+#: ..\..\..\src/TelescopeFactory.cpp:47
+msgid "NexStar/GoTo"
+msgstr "NexStar/GoTo"
+
+#: ..\..\..\src/TelescopeFactory.cpp:49
+msgid "SynScan V2.05"
+msgstr "SynScan V2.05"
+
+#: ..\..\..\src/TelescopeFactory.cpp:51
+msgid "LX-200"
+msgstr "LX-200"
+
+#: ..\..\..\src/VAutoDialog.cpp:119
+msgid "Object name"
+msgstr "Objektum neve"
+
+#: ..\..\..\src/VAutoDialog.cpp:120
+msgid "Coords"
+msgstr "Koordináták"
+
+#: ..\..\..\src/VAutoDialog.cpp:235
+msgid "(no selected object)"
+msgstr "(nincs kiválasztott objektum)"
+
+#: ..\..\..\src/VAutoDialog.cpp:255
+msgid "Open plan file"
+msgstr "Terv file megnyitása"
+
+#: ..\..\..\src/VAutoDialog.cpp:334
+#: ..\..\..\src/XrcStrings.cpp:15
+#: ..\..\..\src/XrcStrings.cpp:76
+msgid "(none)"
+msgstr "(nincs)"
+
+#: ..\..\..\src/VAutoDialog.cpp:436
+msgid "Object not found in program or available catalogs."
+msgstr "Az objektum nem található meg a rendelkezésre álló katalógusokban."
+
+#: ..\..\..\src/VAutoDialog.cpp:436
+msgid "Find Object"
+msgstr "Objektum keresése"
+
+#: ..\..\..\src/VAutoDialog.cpp:565
+#: ..\..\..\src/VAutoDialog.cpp:628
+#: ..\..\..\src/VAutoDialog.cpp:650
+#: ..\..\..\src/VAutoDialog.cpp:654
+#: ..\..\..\src/VAutoDialog.cpp:658
+msgid "Moving telescope"
+msgstr "Távcső mozgatása"
+
+#: ..\..\..\src/VAutoDialog.cpp:574
+msgid "The telescope is not connected. Check cables or telescope power."
+msgstr "Nem kapcsolódik a távcsőhöz. Ellenőrizd a vezetékeket és a távcső áramellátását."
+
+#: ..\..\..\src/VAutoDialog.cpp:580
+msgid "The telescope is not aligned correctly. Align it first."
+msgstr "A távcső nincs kalibrálva."
+
+#: ..\..\..\src/VAutoDialog.cpp:586
+msgid "The telescope is currently moving. Wait until it stops."
+msgstr "A távcső éppen mozog. Várd meg, amíg megáll."
+
+#: ..\..\..\src/VAutoDialog.cpp:633
+msgid "No valid target is selected to move."
+msgstr "Nincs célpont kiválasztva a mozgatáshoz."
+
+#: ..\..\..\src/VAutoDialog.cpp:650
+msgid "The telescope is disconnected. Check cables and power."
+msgstr "A távcső kapcsolat megszakadt. Ellenőrizd a vezetékeket és a tápellátást."
+
+#: ..\..\..\src/VAutoDialog.cpp:654
+msgid "The telescope is not stopped before timeout expired."
+msgstr "A távcső nem állt meg a rendelkezésre álló időn belül."
+
+#: ..\..\..\src/VAutoDialog.cpp:658
+msgid "The telescope stopped by the user."
+msgstr "A távcsövet a felhasználó megállított."
+
+#: ..\..\..\src/VAutoDialog.cpp:703
+#, c-format
+msgid "Time of the exposition must be between %d and %d"
+msgstr "Az expozició idejének %d és %d között kell lennie."
+
+#: ..\..\..\src/VAutoDialog.cpp:708
+#, c-format
+msgid "Number of frames must be between %d and %d"
+msgstr "A képek számának %d és %d között kell lennie."
+
+#: ..\..\..\src/VAutoDialog.cpp:773
+msgid "The camera is not stop shooting before timeout expired."
+msgstr "Az expozició nem ért véget a rendelkezésre álló időn belül."
+
+#: ..\..\..\src/VAutoDialog.cpp:773
+#: ..\..\..\src/VAutoDialog.cpp:778
+msgid "Shooting"
+msgstr "Exponálás"
+
+#: ..\..\..\src/VAutoDialog.cpp:778
+msgid "The exposition stopped by the user."
+msgstr "Az expoziciót a felhasználó megszakította."
+
+#: ..\..\..\src/VAutoDialog.cpp:850
+msgid "Moving..."
+msgstr "Mozgatás..."
+
+#: ..\..\..\src/VAutoDialog.cpp:853
+msgid "Shooting..."
+msgstr "Exponálás..."
+
+#: ..\..\..\src/VAutoDialog.cpp:856
+msgid "Auto"
+msgstr "Auto"
+
+#: ..\..\..\src/VAutoDialog.cpp:856
+msgid "Ready."
+msgstr "Kész."
+
+#: ..\..\..\src/XrcStrings.cpp:1
+#: ..\..\..\src/XrcStrings.cpp:25
+#: ..\..\..\src/XrcStrings.cpp:40
+#: ..\..\..\src/XrcStrings.cpp:65
+#: ..\..\..\src/XrcStrings.cpp:107
+msgid "DSLR Imaging with Mount Control"
+msgstr "DSLR Fényképezés és Távcső Kontrol"
+
+#: ..\..\..\src/XrcStrings.cpp:2
+#: ..\..\..\src/XrcStrings.cpp:26
+#: ..\..\..\src/XrcStrings.cpp:41
+#: ..\..\..\src/XrcStrings.cpp:66
+#: ..\..\..\src/XrcStrings.cpp:108
+msgid "Canon EOS 350D, Goto mount"
+msgstr "Canon EOS 350D, Goto távcső"
+
+#: ..\..\..\src/XrcStrings.cpp:3
+#: ..\..\..\src/XrcStrings.cpp:71
+msgid "&Object name"
+msgstr "&Objektum neve"
+
+#: ..\..\..\src/XrcStrings.cpp:4
+msgid "Object Position"
+msgstr "Objektum poziciója"
+
+#: ..\..\..\src/XrcStrings.cpp:5
+#: ..\..\..\src/XrcStrings.cpp:27
+msgid "DF Cyg"
+msgstr "DF Cyg"
+
+#: ..\..\..\src/XrcStrings.cpp:6
+#: ..\..\..\src/XrcStrings.cpp:29
+msgid "RA"
+msgstr "RA"
+
+#: ..\..\..\src/XrcStrings.cpp:7
+#: ..\..\..\src/XrcStrings.cpp:10
+#: ..\..\..\src/XrcStrings.cpp:30
+#: ..\..\..\src/XrcStrings.cpp:33
+msgid "="
+msgstr "="
+
+#: ..\..\..\src/XrcStrings.cpp:8
+#: ..\..\..\src/XrcStrings.cpp:31
+msgid "12 : 44 : 55.657"
+msgstr "12 : 44 : 55.657"
+
+#: ..\..\..\src/XrcStrings.cpp:9
+#: ..\..\..\src/XrcStrings.cpp:32
+msgid "Decl"
+msgstr "Decl"
+
+#: ..\..\..\src/XrcStrings.cpp:11
+#: ..\..\..\src/XrcStrings.cpp:34
+msgid "+36 : 46 : 44.67 "
+msgstr "+36 : 46 : 44.67 "
+
+#: ..\..\..\src/XrcStrings.cpp:12
+#: ..\..\..\src/XrcStrings.cpp:72
+msgid "&Number of frames"
+msgstr "Képek &száma"
+
+#: ..\..\..\src/XrcStrings.cpp:13
+#: ..\..\..\src/XrcStrings.cpp:73
+msgid "&Duration (sec)"
+msgstr "I&dőtartam (mp)"
+
+#: ..\..\..\src/XrcStrings.cpp:14
+msgid "Exposure"
+msgstr "Exponálás"
+
+#: ..\..\..\src/XrcStrings.cpp:16
+#: ..\..\..\src/XrcStrings.cpp:75
+msgid "Observations plan file"
+msgstr "Észlelési terv file"
+
+#: ..\..\..\src/XrcStrings.cpp:17
+msgid "&Move"
+msgstr "&Mozgat"
+
+#: ..\..\..\src/XrcStrings.cpp:18
+msgid "&Shoot"
+msgstr "&Exponál"
+
+#: ..\..\..\src/XrcStrings.cpp:19
+#: ..\..\..\src/XrcStrings.cpp:38
+#: ..\..\..\src/XrcStrings.cpp:78
+msgid "&Abort"
+msgstr "&Megszakít"
+
+#: ..\..\..\src/XrcStrings.cpp:20
+msgid "A&uto"
+msgstr "A&uto"
+
+#: ..\..\..\src/XrcStrings.cpp:21
+msgid "S&kip"
+msgstr "&Kihagy"
+
+#: ..\..\..\src/XrcStrings.cpp:22
+#: ..\..\..\src/XrcStrings.cpp:79
+msgid "E&xit"
+msgstr "&Kilépés"
+
+#: ..\..\..\src/XrcStrings.cpp:23
+#: ..\..\..\src/XrcStrings.cpp:80
+msgid "StatusBar"
+msgstr "Státuszsor"
+
+#: ..\..\..\src/XrcStrings.cpp:24
+msgid "VAuto"
+msgstr "VAuto"
+
+#: ..\..\..\src/XrcStrings.cpp:28
+msgid "Slew the telescope to this coordinates:"
+msgstr "A távcsövet erre a koordinátára állítja:"
+
+#: ..\..\..\src/XrcStrings.cpp:35
+msgid "&Image"
+msgstr "Ké&p"
+
+#: ..\..\..\src/XrcStrings.cpp:36
+msgid "&Goto"
+msgstr "Mo&zgat"
+
+#: ..\..\..\src/XrcStrings.cpp:37
+msgid "&Skip"
+msgstr "&Kihagy"
+
+#: ..\..\..\src/XrcStrings.cpp:39
+msgid "Slew control"
+msgstr "Mozgatás kontroll"
+
+#: ..\..\..\src/XrcStrings.cpp:42
+#: ..\..\..\src/XrcStrings.cpp:82
+#: ..\..\..\src/XrcStrings.cpp:109
+msgid "Came&ra Type"
+msgstr "Kame&ra típus"
+
+#: ..\..\..\src/XrcStrings.cpp:43
+#: ..\..\..\src/XrcStrings.cpp:83
+#: ..\..\..\src/XrcStrings.cpp:110
+msgid "Canon EOS 350D"
+msgstr "Canon EOS 350D"
+
+#: ..\..\..\src/XrcStrings.cpp:44
+#: ..\..\..\src/XrcStrings.cpp:84
+#: ..\..\..\src/XrcStrings.cpp:111
+msgid "&Com port"
+msgstr "&Com port"
+
+#: ..\..\..\src/XrcStrings.cpp:45
+#: ..\..\..\src/XrcStrings.cpp:57
+#: ..\..\..\src/XrcStrings.cpp:85
+#: ..\..\..\src/XrcStrings.cpp:98
+#: ..\..\..\src/XrcStrings.cpp:112
+#: ..\..\..\src/XrcStrings.cpp:125
+msgid "COM1"
+msgstr "COM1"
+
+#: ..\..\..\src/XrcStrings.cpp:46
+#: ..\..\..\src/XrcStrings.cpp:58
+#: ..\..\..\src/XrcStrings.cpp:86
+#: ..\..\..\src/XrcStrings.cpp:99
+#: ..\..\..\src/XrcStrings.cpp:113
+#: ..\..\..\src/XrcStrings.cpp:126
+msgid "COM2"
+msgstr "COM2"
+
+#: ..\..\..\src/XrcStrings.cpp:47
+#: ..\..\..\src/XrcStrings.cpp:59
+#: ..\..\..\src/XrcStrings.cpp:87
+#: ..\..\..\src/XrcStrings.cpp:100
+#: ..\..\..\src/XrcStrings.cpp:114
+#: ..\..\..\src/XrcStrings.cpp:127
+msgid "COM3"
+msgstr "COM3"
+
+#: ..\..\..\src/XrcStrings.cpp:48
+#: ..\..\..\src/XrcStrings.cpp:60
+#: ..\..\..\src/XrcStrings.cpp:88
+#: ..\..\..\src/XrcStrings.cpp:101
+#: ..\..\..\src/XrcStrings.cpp:115
+#: ..\..\..\src/XrcStrings.cpp:128
+msgid "COM4"
+msgstr "COM4"
+
+#: ..\..\..\src/XrcStrings.cpp:49
+#: ..\..\..\src/XrcStrings.cpp:89
+#: ..\..\..\src/XrcStrings.cpp:116
+msgid "&Mirror lockup"
+msgstr "&Tükör felcsapás"
+
+#: ..\..\..\src/XrcStrings.cpp:50
+msgid "Delay before &lockup"
+msgstr "Késleltetés a &felcsapás előtt"
+
+#: ..\..\..\src/XrcStrings.cpp:51
+msgid "Delay before &frame"
+msgstr "Késleltetés a &kép előtt"
+
+#: ..\..\..\src/XrcStrings.cpp:52
+#: ..\..\..\src/XrcStrings.cpp:92
+#: ..\..\..\src/XrcStrings.cpp:119
+msgid "Camera Shutter setup"
+msgstr "Kamera beállítás"
+
+#: ..\..\..\src/XrcStrings.cpp:53
+#: ..\..\..\src/XrcStrings.cpp:94
+#: ..\..\..\src/XrcStrings.cpp:121
+msgid "Mount &Type"
+msgstr "&Távcső típus"
+
+#: ..\..\..\src/XrcStrings.cpp:54
+#: ..\..\..\src/XrcStrings.cpp:95
+#: ..\..\..\src/XrcStrings.cpp:122
+msgid "Goto mount"
+msgstr "Goto távcső"
+
+#: ..\..\..\src/XrcStrings.cpp:55
+#: ..\..\..\src/XrcStrings.cpp:96
+#: ..\..\..\src/XrcStrings.cpp:123
+msgid "LX-200 mount"
+msgstr "LX-200 mount"
+
+#: ..\..\..\src/XrcStrings.cpp:56
+#: ..\..\..\src/XrcStrings.cpp:97
+#: ..\..\..\src/XrcStrings.cpp:124
+msgid "C&om port"
+msgstr "C&om port"
+
+#: ..\..\..\src/XrcStrings.cpp:61
+#: ..\..\..\src/XrcStrings.cpp:102
+#: ..\..\..\src/XrcStrings.cpp:129
+msgid "Mount setup"
+msgstr "Távcső beállítás"
+
+#: ..\..\..\src/XrcStrings.cpp:62
+#: ..\..\..\src/XrcStrings.cpp:135
+msgid "&Save"
+msgstr "&Ment"
+
+#: ..\..\..\src/XrcStrings.cpp:63
+#: ..\..\..\src/XrcStrings.cpp:136
+msgid "Cancel"
+msgstr "Mégsem"
+
+#: ..\..\..\src/XrcStrings.cpp:64
+msgid "VAuto options"
+msgstr "VAuto beállítás"
+
+#: ..\..\..\src/XrcStrings.cpp:67
+msgid ""
+"VAuto, version 1.0\n"
+"Copyright (c) KVI, 2009."
+msgstr ""
+"VAuto, version 1.0\n"
+"Copyright (c) KVI, 2009."
+
+#: ..\..\..\src/XrcStrings.cpp:68
+msgid ""
+"Supported camera types: Canon EOS 350D\n"
+"Supported mount types: Goto, LX-200"
+msgstr ""
+"Támogatott kamera típusok: Canon EOS 350D\n"
+"Támogatott távcső típusok: Goto, LX-200"
+
+#: ..\..\..\src/XrcStrings.cpp:69
+msgid "Close"
+msgstr "Bezár"
+
+#: ..\..\..\src/XrcStrings.cpp:70
+msgid "About VAuto"
+msgstr "VAuto névjegy"
+
+#: ..\..\..\src/XrcStrings.cpp:74
+msgid "Manual exposure control"
+msgstr "Manuális exponálás"
+
+#: ..\..\..\src/XrcStrings.cpp:77
+msgid "&Start"
+msgstr "I&ndítás"
+
+#: ..\..\..\src/XrcStrings.cpp:81
+msgid "Control"
+msgstr "Vezérlés"
+
+#: ..\..\..\src/XrcStrings.cpp:90
+#: ..\..\..\src/XrcStrings.cpp:117
+msgid "Delay after &lockup"
+msgstr "Késleltetés a &felcsapás után"
+
+#: ..\..\..\src/XrcStrings.cpp:91
+#: ..\..\..\src/XrcStrings.cpp:118
+msgid "Delay after &frame"
+msgstr "Késleltetés a &kép után"
+
+#: ..\..\..\src/XrcStrings.cpp:93
+#: ..\..\..\src/XrcStrings.cpp:120
+msgid "Camera"
+msgstr "Kamera"
+
+#: ..\..\..\src/XrcStrings.cpp:103
+#: ..\..\..\src/XrcStrings.cpp:130
+msgid "Mount"
+msgstr "Távcső"
+
+#: ..\..\..\src/XrcStrings.cpp:104
+#: ..\..\..\src/XrcStrings.cpp:133
+#: ..\..\..\src/XrcStrings.cpp:134
+msgid "Station"
+msgstr "Észlelőhely"
+
+#: ..\..\..\src/XrcStrings.cpp:105
+#: ..\..\..\src/XrcStrings.cpp:106
+#: ..\..\..\src/XrcStrings.cpp:137
+msgid "Options"
+msgstr "Beállítások"
+
+#: ..\..\..\src/XrcStrings.cpp:131
+msgid "&Longitude"
+msgstr "&Hosszúság"
+
+#: ..\..\..\src/XrcStrings.cpp:132
+msgid "Latitu&de"
+msgstr "&Szélesség"
+
+#: ..\..\..\src/camera/CanonEosShutter.cpp:80
+#: ..\..\..\src/camera/CanonEosUsb.cpp:183
+msgid "End shooting."
+msgstr "Expozició vége."
+
+#: ..\..\..\src/camera/CanonEosUsb.cpp:67
+msgid "No camera was found."
+msgstr "Nincs kamera."
+
+#: ..\..\..\src/camera/CanonEosUsb.cpp:83
+#, c-format
+msgid "Camera found. Type: %s, protocol: %s"
+msgstr "Kamera azonosítva. Típus: %s, protokol: %s"
+
+#: ..\..\..\src/camera/CanonEosUsb.cpp:109
+#, c-format
+msgid "Cancel shooting: cannot open camera session (%d)"
+msgstr "Expozició megszakítás: a kamera session-t nem sikerült megnyitni (%d)"
+
+#: ..\..\..\src/camera/CanonEosUsb.cpp:128
+#, c-format
+msgid "Cancel shooting: error in UI lock (%d)"
+msgstr "Expozició megszakítás: hiba az UI lockolásban (%d)"
+
+#: ..\..\..\src/camera/CanonEosUsb.cpp:144
+msgid "ShutterButton command is not supperted. BulbStart is used instead."
+msgstr "ShutterButton command is not supperted. BulbStart is used instead."
+
+#: ..\..\..\src/camera/CanonEosUsb.cpp:152
+#, c-format
+msgid "Cancel shooting: error in bulb start (%d)"
+msgstr "Expozició megszakítás: hiba a B idejű expozició indításánál (%d)"
+
+#~ msgid "Manual &Goto"
+#~ msgstr "Ma&nuális mozgatás"
+#~ msgid "VAuto Log"
+#~ msgstr "VAuto Log"
+#~ msgid "Shooting timer ends."
+#~ msgstr "Az exponálás időzítője lejárt."
+#~ msgid "Initializing Canon SDK"
+#~ msgstr "A Canon SDK inicializálása."
+#~ msgid "Terminating Canon DSK"
+#~ msgstr "A Canon SDK lezárása."
+#~ msgid "Start shooting for %ld"
+#~ msgstr "Expozició indítás %ld mp."
+#~ msgid "Cancel shooting: no camera was found."
+#~ msgstr "Expozició megszakítás: nincs kamera."
+#~ msgid "Start shooting timer."
+#~ msgstr "Exponálás időzítő indítása."
+#~ msgid "The camera stopped before timeout expired."
+#~ msgstr "The camera stopped before timeout expired."
+#~ msgid ", mount:"
+#~ msgstr ", távcső:"
+#~ msgid "Longitude and latitude must be given as a number."
+#~ msgstr "Szélességnek és a hosszúságnak számot kell megadni."
+#~ msgid "Bad plan file."
+#~ msgstr "Rossz terv file."
+#~ msgid "Open plan"
+#~ msgstr "Terv megnyitása"
+#~ msgid "EQ6 setup"
+#~ msgstr "EQ6 beállítás"
+

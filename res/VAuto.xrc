@@ -1,0 +1,1874 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resource version="2.3.0.1">
+  <object class="wxDialog" name="MainDialog">
+    <object class="wxBoxSizer">
+      <orient>wxVERTICAL</orient>
+      <object class="sizeritem">
+        <object class="wxPanel" name="TitleBar">
+          <object class="wxBoxSizer">
+            <object class="sizeritem">
+              <object class="wxStaticBitmap">
+                <bitmap>dslr.png</bitmap>
+              </object>
+              <flag>wxALL</flag>
+              <border>8</border>
+            </object>
+            <object class="sizeritem">
+              <object class="wxBoxSizer">
+                <object class="sizeritem">
+                  <object class="wxStaticText">
+                    <label>DSLR Imaging with Mount Control</label>
+                    <font>
+                      <size>11</size>
+                      <style>normal</style>
+                      <weight>normal</weight>
+                      <underlined>0</underlined>
+                      <family>swiss</family>
+                      <face>Tahoma</face>
+                      <encoding>WINDOWS-1250</encoding>
+                    </font>
+                  </object>
+                </object>
+                <object class="sizeritem">
+                  <object class="wxStaticText" name="DEVICE_TEXT">
+                    <label>Canon EOS 350D, Goto mount</label>
+                    <font>
+                      <size>8</size>
+                      <style>normal</style>
+                      <weight>normal</weight>
+                      <underlined>0</underlined>
+                      <family>swiss</family>
+                      <face>Tahoma</face>
+                      <encoding>WINDOWS-1250</encoding>
+                    </font>
+                    <XRCED>
+                      <assign_var>1</assign_var>
+                    </XRCED>
+                  </object>
+                  <flag>wxTOP</flag>
+                  <border>2</border>
+                </object>
+                <orient>wxVERTICAL</orient>
+              </object>
+              <flag>wxALIGN_CENTRE_VERTICAL</flag>
+            </object>
+            <orient>wxHORIZONTAL</orient>
+          </object>
+          <fg>#800000</fg>
+          <bg>#FFFFFF</bg>
+          <style>wxSIMPLE_BORDER</style>
+        </object>
+        <flag>wxEXPAND</flag>
+      </object>
+      <object class="sizeritem">
+        <object class="wxBoxSizer">
+          <object class="sizeritem">
+            <object class="wxBoxSizer">
+              <orient>wxVERTICAL</orient>
+              <object class="sizeritem">
+                <object class="wxStaticBoxSizer">
+                  <object class="sizeritem">
+                    <object class="wxFlexGridSizer">
+                      <object class="sizeritem">
+                        <object class="wxStaticText">
+                          <label>&amp;Object name</label>
+                        </object>
+                        <flag>wxALIGN_CENTRE_VERTICAL</flag>
+                      </object>
+                      <object class="sizeritem">
+                        <object class="wxBoxSizer">
+                          <orient>wxHORIZONTAL</orient>
+                          <object class="sizeritem">
+                            <object class="wxTextCtrl" name="ID_OBJNAME">
+                              <XRCED>
+                                <assign_var>1</assign_var>
+                              </XRCED>
+                            </object>
+                          </object>
+                          <object class="sizeritem">
+                            <object class="wxBitmapButton" name="ID_FIND_OBJECT">
+                              <bitmap>next18.png</bitmap>
+                              <XRCED>
+                                <events>EVT_BUTTON</events>
+                                <assign_var>1</assign_var>
+                              </XRCED>
+                            </object>
+                          </object>
+                        </object>
+                      </object>
+              
+              
+              
+                      <cols>2</cols>
+              
+                      <rows>2</rows>
+                      <vgap>8</vgap>
+                      <hgap>8</hgap>
+                      <growablecols>0</growablecols>
+                    </object>
+                    <flag>wxALL|wxEXPAND</flag>
+                    <border>8</border>
+                  </object>
+                  <label>Object Position</label>
+                  <orient>wxVERTICAL</orient>
+                  <object class="sizeritem">
+                    <object class="wxStaticLine"/>
+                    <flag>wxALL|wxEXPAND</flag>
+                    <border>8</border>
+                  </object>
+                  <object class="sizeritem">
+                    <object class="wxBoxSizer">
+                      <object class="sizeritem">
+                        <object class="wxStaticText" name="ID_NAME">
+                          <label>DF Cyg</label>
+                          <font>
+                            <size>14</size>
+                            <style>normal</style>
+                            <weight>bold</weight>
+                            <underlined>0</underlined>
+                            <family>swiss</family>
+                            <face>Tahoma</face>
+                            <encoding>WINDOWS-1250</encoding>
+                          </font>
+                          <style>wxALIGN_CENTRE</style>
+                          <XRCED>
+                            <assign_var>1</assign_var>
+                          </XRCED>
+                        </object>
+                        <flag>wxBOTTOM|wxEXPAND|wxALIGN_CENTRE_HORIZONTAL</flag>
+                        <border>4</border>
+                      </object>
+                      <object class="sizeritem">
+                        <object class="wxFlexGridSizer">
+                          <object class="sizeritem">
+                            <object class="wxStaticText">
+                              <label>RA</label>
+                              <font>
+                                <size>14</size>
+                                <style>normal</style>
+                                <weight>bold</weight>
+                                <underlined>0</underlined>
+                                <family>swiss</family>
+                                <face>Tahoma</face>
+                                <encoding>WINDOWS-1250</encoding>
+                              </font>
+                            </object>
+                          </object>
+                          <object class="sizeritem">
+                            <object class="wxStaticText">
+                              <label>=</label>
+                              <font>
+                                <size>14</size>
+                                <style>normal</style>
+                                <weight>bold</weight>
+                                <underlined>0</underlined>
+                                <family>swiss</family>
+                                <face>Tahoma</face>
+                                <encoding>WINDOWS-1250</encoding>
+                              </font>
+                            </object>
+                          </object>
+                          <object class="sizeritem">
+                            <object class="wxStaticText" name="ID_RA">
+                              <label>12 : 44 : 55.657</label>
+                              <font>
+                                <size>14</size>
+                                <style>normal</style>
+                                <weight>bold</weight>
+                                <underlined>0</underlined>
+                                <family>swiss</family>
+                                <face>Tahoma</face>
+                                <encoding>WINDOWS-1250</encoding>
+                              </font>
+                              <XRCED>
+                                <assign_var>1</assign_var>
+                              </XRCED>
+                            </object>
+                            <flag>wxEXPAND</flag>
+                          </object>
+                          <object class="sizeritem">
+                            <object class="wxStaticText">
+                              <label>Decl</label>
+                              <font>
+                                <size>14</size>
+                                <style>normal</style>
+                                <weight>bold</weight>
+                                <underlined>0</underlined>
+                                <family>swiss</family>
+                                <face>Tahoma</face>
+                                <encoding>WINDOWS-1250</encoding>
+                              </font>
+                            </object>
+                          </object>
+                          <object class="sizeritem">
+                            <object class="wxStaticText">
+                              <label>=</label>
+                              <font>
+                                <size>14</size>
+                                <style>normal</style>
+                                <weight>bold</weight>
+                                <underlined>0</underlined>
+                                <family>swiss</family>
+                                <face>Tahoma</face>
+                                <encoding>WINDOWS-1250</encoding>
+                              </font>
+                            </object>
+                          </object>
+                          <object class="sizeritem">
+                            <object class="wxStaticText" name="ID_DECL">
+                              <label>+36 : 46 : 44.67 </label>
+                              <font>
+                                <size>14</size>
+                                <style>normal</style>
+                                <weight>bold</weight>
+                                <underlined>0</underlined>
+                                <family>swiss</family>
+                                <face>Tahoma</face>
+                                <encoding>WINDOWS-1250</encoding>
+                              </font>
+                              <XRCED>
+                                <assign_var>1</assign_var>
+                              </XRCED>
+                            </object>
+                            <flag>wxEXPAND</flag>
+                          </object>
+                          <cols>3</cols>
+                          <rows>2</rows>
+                          <vgap>8</vgap>
+                          <hgap>8</hgap>
+                        </object>
+                        <flag>wxALL|wxEXPAND|wxALIGN_CENTRE_HORIZONTAL</flag>
+                        <border>4</border>
+                      </object>
+                      <orient>wxVERTICAL</orient>
+                    </object>
+                    <flag>wxALL|wxEXPAND</flag>
+                    <border>4</border>
+                  </object>
+                </object>
+                <flag>wxEXPAND</flag>
+              </object>
+              <object class="sizeritem">
+                <object class="wxStaticBoxSizer">
+                  <object class="sizeritem">
+                    <object class="wxFlexGridSizer">
+                      <object class="sizeritem">
+                        <object class="wxStaticText">
+                          <label>&amp;Number of frames</label>
+                        </object>
+                        <flag>wxALIGN_CENTRE_VERTICAL</flag>
+                      </object>
+                      <object class="sizeritem">
+                        <object class="wxSpinCtrl" name="ID_FRAMECOUNT">
+                          <value>1</value>
+                          <min>1</min>
+                          <max>999</max>
+                          <XRCED>
+                            <assign_var>1</assign_var>
+                          </XRCED>
+                        </object>
+                      </object>
+                      <object class="sizeritem">
+                        <object class="wxStaticText">
+                          <label>&amp;Duration (sec)</label>
+                        </object>
+                        <flag>wxALIGN_CENTRE_VERTICAL</flag>
+                      </object>
+                      <object class="sizeritem">
+                        <object class="wxSpinCtrl" name="ID_DURATION">
+                          <value>60</value>
+                          <min>1</min>
+                          <max>999</max>
+                          <XRCED>
+                            <assign_var>1</assign_var>
+                          </XRCED>
+                        </object>
+                      </object>
+                      <cols>2</cols>
+                      <rows>2</rows>
+                      <vgap>8</vgap>
+                      <hgap>8</hgap>
+                      <growablecols>0</growablecols>
+                    </object>
+                    <flag>wxALL|wxEXPAND</flag>
+                    <border>8</border>
+                  </object>
+                  <label>Exposure</label>
+                  <orient>wxVERTICAL</orient>
+                </object>
+                <flag>wxTOP|wxEXPAND</flag>
+                <border>8</border>
+              </object>
+            </object>
+          </object>
+          <object class="sizeritem">
+            <object class="wxStaticBoxSizer">
+              <object class="sizeritem">
+                <object class="wxBoxSizer">
+                  <object class="sizeritem">
+                    <object class="wxBitmapButton" name="ID_OPENPLAN">
+                      <bitmap>openc24.png</bitmap>
+                      <XRCED>
+                        <events>EVT_BUTTON</events>
+                        <assign_var>1</assign_var>
+                      </XRCED>
+                    </object>
+                  </object>
+                  <object class="sizeritem">
+                    <object class="wxBitmapButton" name="ID_DELETEPLAN">
+                      <bitmap>delete24.png</bitmap>
+                      <XRCED>
+                        <events>EVT_BUTTON</events>
+                        <assign_var>1</assign_var>
+                      </XRCED>
+                    </object>
+                  </object>
+                  <object class="sizeritem">
+                    <object class="wxStaticText" name="ID_PLANFILE">
+                      <size>225,-1</size>
+                      <label>(none)</label>
+                      <XRCED>
+                        <assign_var>1</assign_var>
+                      </XRCED>
+                    </object>
+                    <flag>wxLEFT|wxALIGN_CENTRE_VERTICAL</flag>
+                    <border>4</border>
+                  </object>
+                  <orient>wxHORIZONTAL</orient>
+                </object>
+                <flag>wxALL</flag>
+                <border>4</border>
+              </object>
+              <label>Observations plan file</label>
+              <orient>wxVERTICAL</orient>
+              <object class="sizeritem">
+                <object class="wxListCtrl" name="ID_PLAN_LIST">
+                  <size>240,240</size>
+                  <style>wxLC_REPORT|wxLC_SINGLE_SEL|wxLC_HRULES|wxLC_VRULES</style>
+                </object>
+                <flag>wxALL|wxEXPAND</flag>
+                <border>4</border>
+              </object>
+            </object>
+            <flag>wxLEFT</flag>
+            <border>8</border>
+          </object>
+          <orient>wxHORIZONTAL</orient>
+        </object>
+        <flag>wxALL</flag>
+        <border>8</border>
+      </object>
+      
+      <object class="sizeritem">
+        <object class="wxBoxSizer">
+          <object class="sizeritem">
+            <object class="wxButton" name="ID_MOVE">
+              <label>&amp;Move</label>
+              <XRCED>
+                <events>EVT_BUTTON</events>
+                <assign_var>1</assign_var>
+              </XRCED>
+            </object>
+          </object>
+          <object class="sizeritem">
+            <object class="wxButton" name="ID_SHOOT">
+              <label>&amp;Shoot</label>
+            </object>
+            <flag>wxLEFT</flag>
+            <border>4</border>
+          </object>
+          <object class="spacer">
+            <size>24,1</size>
+            <flag>wxGROW</flag>
+          </object>
+          <object class="sizeritem">
+            <object class="wxButton" name="ID_ABORT">
+              <label>&amp;Abort</label>
+              <enabled>0</enabled>
+              <XRCED>
+                <events>EVT_BUTTON</events>
+                <assign_var>1</assign_var>
+              </XRCED>
+            </object>
+          </object>
+          <object class="spacer">
+            <size>24,1</size>
+            <flag>wxGROW</flag>
+          </object>
+          <object class="sizeritem">
+            <object class="wxButton" name="ID_AUTO">
+              <label>A&amp;uto</label>
+            </object>
+          </object>
+          <object class="sizeritem">
+            <object class="wxButton" name="ID_SKIP">
+              <label>S&amp;kip</label>
+            </object>
+            <flag>wxLEFT</flag>
+            <border>4</border>
+          </object>
+          <object class="spacer">
+            <size>24,1</size>
+            <flag>wxGROW</flag>
+          </object>
+          <object class="sizeritem">
+            <object class="wxBitmapButton" name="ID_OPTIONS">
+              <bitmap>settings20.png</bitmap>
+              <XRCED>
+                <events>EVT_BUTTON</events>
+                <assign_var>1</assign_var>
+              </XRCED>
+            </object>
+          </object>
+          
+          <object class="sizeritem">
+            <object class="wxBitmapButton" name="ID_ABOUT">
+              <bitmap>help20.png</bitmap>
+              <XRCED>
+                <events>EVT_BUTTON</events>
+              </XRCED>
+            </object>
+            <flag>wxLEFT</flag>
+            <border>4</border>
+          </object>
+          <orient>wxHORIZONTAL</orient>
+          <object class="sizeritem">
+            <object class="wxButton" name="wxID_EXIT">
+              <label>E&amp;xit</label>
+              <XRCED>
+                <events>EVT_BUTTON</events>
+              </XRCED>
+            </object>
+            <flag>wxLEFT</flag>
+            <border>4</border>
+          </object>
+        </object>
+        <flag>wxALL|wxEXPAND</flag>
+        <border>8</border>
+      </object>
+      <object class="sizeritem">
+        <object class="wxPanel" name="StatusBar">
+          <object class="wxBoxSizer">
+            <orient>wxVERTICAL</orient>
+            <object class="sizeritem">
+              <object class="wxStaticText" name="ID_STATUS_BAR">
+                <label>StatusBar</label>
+                <font>
+                  <size>10</size>
+                  <style>normal</style>
+                  <weight>normal</weight>
+                  <underlined>0</underlined>
+                  <family>swiss</family>
+                  <face>Tahoma</face>
+                  <encoding>WINDOWS-1250</encoding>
+                </font>
+                <XRCED>
+                  <assign_var>1</assign_var>
+                </XRCED>
+              </object>
+              <flag>wxEXPAND|wxALL</flag>
+              <border>4</border>
+            </object>
+          </object>
+          <bg>#F9FFAA</bg>
+        </object>
+        <flag>wxEXPAND</flag>
+      </object>
+    </object>
+    <title>VAuto</title>
+    <font>
+      <size>11</size>
+      <style>normal</style>
+      <weight>normal</weight>
+      <underlined>0</underlined>
+      <family>swiss</family>
+      <face>Tahoma</face>
+      <encoding>WINDOWS-1250</encoding>
+    </font>
+    <style>wxDEFAULT_DIALOG_STYLE|wxMINIMIZE_BOX|wxDIALOG_NO_PARENT|wxTAB_TRAVERSAL</style>
+  </object>
+  <object class="wxDialog" name="CoordNotifier">
+    <object class="wxBoxSizer">
+      <orient>wxVERTICAL</orient>
+      <object class="sizeritem">
+        <object class="wxPanel">
+          <object class="wxBoxSizer">
+            <object class="sizeritem">
+              <object class="wxStaticBitmap">
+                <bitmap>dslr.png</bitmap>
+              </object>
+              <flag>wxALL</flag>
+              <border>8</border>
+            </object>
+            <object class="sizeritem">
+              <object class="wxBoxSizer">
+                <object class="sizeritem">
+                  <object class="wxStaticText">
+                    <label>DSLR Imaging with Mount Control</label>
+                    <font>
+                      <size>11</size>
+                      <style>normal</style>
+                      <weight>normal</weight>
+                      <underlined>0</underlined>
+                      <family>swiss</family>
+                      <face>Tahoma</face>
+                      <encoding>WINDOWS-1250</encoding>
+                    </font>
+                  </object>
+                </object>
+                <object class="sizeritem">
+                  <object class="wxStaticText" name="DEVICE_TEXT">
+                    <label>Canon EOS 350D, Goto mount</label>
+                    <font>
+                      <size>8</size>
+                      <style>normal</style>
+                      <weight>normal</weight>
+                      <underlined>0</underlined>
+                      <family>swiss</family>
+                      <face>Tahoma</face>
+                      <encoding>WINDOWS-1250</encoding>
+                    </font>
+                    <XRCED>
+                      <assign_var>1</assign_var>
+                    </XRCED>
+                  </object>
+                  <flag>wxTOP</flag>
+                  <border>2</border>
+                </object>
+                <orient>wxVERTICAL</orient>
+              </object>
+              <flag>wxALIGN_CENTRE_VERTICAL</flag>
+            </object>
+            <orient>wxHORIZONTAL</orient>
+          </object>
+          <fg>#800000</fg>
+          <bg>#FFFFFF</bg>
+          <style>wxSIMPLE_BORDER</style>
+        </object>
+        <flag>wxEXPAND</flag>
+      </object>
+      <object class="sizeritem">
+        <object class="wxStaticBoxSizer">
+          <object class="sizeritem">
+            <object class="wxStaticText" name="ObjectName">
+              <label>DF Cyg</label>
+              <font>
+                <size>14</size>
+                <style>normal</style>
+                <weight>bold</weight>
+                <underlined>0</underlined>
+                <family>swiss</family>
+                <face>Tahoma</face>
+                <encoding>WINDOWS-1250</encoding>
+              </font>
+              <style>wxALIGN_CENTRE</style>
+              <XRCED>
+                <assign_var>1</assign_var>
+              </XRCED>
+            </object>
+            <flag>wxEXPAND|wxALL</flag>
+            <border>8</border>
+          </object>
+          <object class="sizeritem">
+            <object class="wxStaticLine"/>
+            <flag>wxEXPAND|wxLEFT|wxRIGHT</flag>
+            <border>8</border>
+          </object>
+          <object class="sizeritem">
+            <object class="wxStaticText">
+              <label>Slew the telescope to this coordinates:</label>
+            </object>
+            <flag>wxALL|wxALIGN_CENTRE_VERTICAL</flag>
+            <border>8</border>
+          </object>
+          <object class="sizeritem">
+            <object class="wxFlexGridSizer">
+              <object class="sizeritem">
+                <object class="wxStaticText">
+                  <label>RA</label>
+                  <font>
+                    <size>14</size>
+                    <style>normal</style>
+                    <weight>bold</weight>
+                    <underlined>0</underlined>
+                    <family>swiss</family>
+                    <face>Tahoma</face>
+                    <encoding>WINDOWS-1250</encoding>
+                  </font>
+                </object>
+              </object>
+              <object class="sizeritem">
+                <object class="wxStaticText">
+                  <label>=</label>
+                  <font>
+                    <size>14</size>
+                    <style>normal</style>
+                    <weight>bold</weight>
+                    <underlined>0</underlined>
+                    <family>swiss</family>
+                    <face>Tahoma</face>
+                    <encoding>WINDOWS-1250</encoding>
+                  </font>
+                </object>
+              </object>
+              <object class="sizeritem">
+                <object class="wxStaticText" name="RA">
+                  <label>12 : 44 : 55.657</label>
+                  <font>
+                    <size>14</size>
+                    <style>normal</style>
+                    <weight>bold</weight>
+                    <underlined>0</underlined>
+                    <family>swiss</family>
+                    <face>Tahoma</face>
+                    <encoding>WINDOWS-1250</encoding>
+                  </font>
+                  <XRCED>
+                    <assign_var>1</assign_var>
+                  </XRCED>
+                </object>
+              </object>
+              <object class="sizeritem">
+                <object class="wxStaticText">
+                  <label>Decl</label>
+                  <font>
+                    <size>14</size>
+                    <style>normal</style>
+                    <weight>bold</weight>
+                    <underlined>0</underlined>
+                    <family>swiss</family>
+                    <face>Tahoma</face>
+                    <encoding>WINDOWS-1250</encoding>
+                  </font>
+                </object>
+              </object>
+              <object class="sizeritem">
+                <object class="wxStaticText">
+                  <label>=</label>
+                  <font>
+                    <size>14</size>
+                    <style>normal</style>
+                    <weight>bold</weight>
+                    <underlined>0</underlined>
+                    <family>swiss</family>
+                    <face>Tahoma</face>
+                    <encoding>WINDOWS-1250</encoding>
+                  </font>
+                </object>
+              </object>
+              <object class="sizeritem">
+                <object class="wxStaticText" name="Decl">
+                  <label>+36 : 46 : 44.67 </label>
+                  <font>
+                    <size>14</size>
+                    <style>normal</style>
+                    <weight>bold</weight>
+                    <underlined>0</underlined>
+                    <family>swiss</family>
+                    <face>Tahoma</face>
+                    <encoding>WINDOWS-1250</encoding>
+                  </font>
+                  <XRCED>
+                    <assign_var>1</assign_var>
+                  </XRCED>
+                </object>
+              </object>
+              <cols>3</cols>
+              <rows>2</rows>
+              <vgap>8</vgap>
+              <hgap>8</hgap>
+            </object>
+            <flag>wxALL</flag>
+            <border>8</border>
+          </object>
+          <orient>wxVERTICAL</orient>
+        </object>
+        <flag>wxALL|wxEXPAND</flag>
+        <border>8</border>
+      </object>
+      <object class="sizeritem">
+        <object class="wxBoxSizer">
+          <object class="sizeritem">
+            <object class="wxButton" name="ImageButton">
+              <label>&amp;Image</label>
+              <XRCED>
+                <events>EVT_BUTTON</events>
+                <assign_var>1</assign_var>
+              </XRCED>
+            </object>
+            <flag>wxBOTTOM</flag>
+            <border>8</border>
+          </object>
+          <object class="sizeritem">
+            <object class="wxButton" name="GotoButton">
+              <label>&amp;Goto</label>
+              <XRCED>
+                <events>EVT_BUTTON</events>
+                <assign_var>1</assign_var>
+              </XRCED>
+            </object>
+            <flag>wxLEFT</flag>
+            <border>4</border>
+          </object>
+          <orient>wxHORIZONTAL</orient>
+          <object class="sizeritem">
+            <object class="wxButton" name="SkipButton">
+              <label>&amp;Skip</label>
+              <XRCED>
+                <events>EVT_BUTTON</events>
+                <assign_var>1</assign_var>
+              </XRCED>
+            </object>
+            <flag>wxLEFT</flag>
+            <border>4</border>
+          </object>
+          <object class="sizeritem">
+            <object class="wxButton" name="AbortButton">
+              <label>&amp;Abort</label>
+              <XRCED>
+                <events>EVT_BUTTON</events>
+                <assign_var>1</assign_var>
+              </XRCED>
+            </object>
+            <flag>wxLEFT</flag>
+            <border>4</border>
+          </object>
+        </object>
+        <flag>wxALL|wxALIGN_CENTRE_HORIZONTAL</flag>
+        <border>8</border>
+      </object>
+    </object>
+    <title>Slew control</title>
+    <font>
+      <size>11</size>
+      <style>normal</style>
+      <weight>normal</weight>
+      <underlined>0</underlined>
+      <family>swiss</family>
+      <face>Tahoma</face>
+      <encoding>WINDOWS-1250</encoding>
+    </font>
+  </object>
+  <object class="wxDialog" name="Options">
+    <object class="wxBoxSizer">
+      <orient>wxVERTICAL</orient>
+      <object class="sizeritem">
+        <object class="wxPanel">
+          <object class="wxBoxSizer">
+            <object class="sizeritem">
+              <object class="wxStaticBitmap">
+                <bitmap>dslr.png</bitmap>
+              </object>
+              <flag>wxALL</flag>
+              <border>8</border>
+            </object>
+            <object class="sizeritem">
+              <object class="wxBoxSizer">
+                <object class="sizeritem">
+                  <object class="wxStaticText">
+                    <label>DSLR Imaging with Mount Control</label>
+                    <font>
+                      <size>11</size>
+                      <style>normal</style>
+                      <weight>normal</weight>
+                      <underlined>0</underlined>
+                      <family>swiss</family>
+                      <face>Tahoma</face>
+                      <encoding>WINDOWS-1250</encoding>
+                    </font>
+                  </object>
+                </object>
+                <object class="sizeritem">
+                  <object class="wxStaticText" name="DEVICE_TEXT">
+                    <label>Canon EOS 350D, Goto mount</label>
+                    <font>
+                      <size>8</size>
+                      <style>normal</style>
+                      <weight>normal</weight>
+                      <underlined>0</underlined>
+                      <family>swiss</family>
+                      <face>Tahoma</face>
+                      <encoding>WINDOWS-1250</encoding>
+                    </font>
+                    <XRCED>
+                      <assign_var>1</assign_var>
+                    </XRCED>
+                  </object>
+                  <flag>wxTOP</flag>
+                  <border>2</border>
+                </object>
+                <orient>wxVERTICAL</orient>
+              </object>
+              <flag>wxALIGN_CENTRE_VERTICAL</flag>
+            </object>
+            <orient>wxHORIZONTAL</orient>
+          </object>
+          <fg>#800000</fg>
+          <bg>#FFFFFF</bg>
+          <style>wxSIMPLE_BORDER</style>
+        </object>
+        <flag>wxEXPAND</flag>
+      </object>
+      <object class="sizeritem">
+        <object class="wxStaticBoxSizer">
+          <object class="sizeritem">
+            <object class="wxGridSizer">
+              <cols>2</cols>
+              <rows>3</rows>
+              <vgap>8</vgap>
+              <hgap>8</hgap>
+              <object class="sizeritem">
+                <object class="wxStaticText">
+                  <label>Came&amp;ra Type</label>
+                </object>
+              </object>
+              <object class="sizeritem">
+                <object class="wxChoice" name="ID_CAMERA_TYPE">
+                  <content>
+                    <item>Canon EOS 350D</item>
+                  </content>
+                  <selection>0</selection>
+                  <bg>#A5BFFE</bg>
+                  <XRCED>
+                    <assign_var>1</assign_var>
+                  </XRCED>
+                </object>
+                <flag>wxEXPAND</flag>
+              </object>
+              <object class="sizeritem">
+                <object class="wxStaticText">
+                  <label>&amp;Com port</label>
+                </object>
+              </object>
+              <object class="sizeritem">
+                <object class="wxChoice" name="ID_COMPORT">
+                  <content>
+                    <item>COM1</item>
+                    <item>COM2</item>
+                    <item>COM3</item>
+                    <item>COM4</item>
+                  </content>
+                  <selection>0</selection>
+                  <XRCED>
+                    <assign_var>1</assign_var>
+                  </XRCED>
+                </object>
+                <flag>wxEXPAND</flag>
+              </object>
+              <object class="sizeritem">
+                <object class="wxCheckBox" name="ID_LOCKUP">
+                  <label>&amp;Mirror lockup</label>
+                  <checked>1</checked>
+                  <XRCED>
+                    <events>EVT_CHECKBOX</events>
+                    <assign_var>1</assign_var>
+                  </XRCED>
+                </object>
+              </object>
+              <object class="spacer"/>
+              <object class="sizeritem">
+                <object class="wxStaticText" name="IDT_LOCKUPDELAY">
+                  <label>Delay before &amp;lockup</label>
+                  <XRCED>
+                    <assign_var>1</assign_var>
+                  </XRCED>
+                </object>
+              </object>
+              <object class="sizeritem">
+                <object class="wxSpinCtrl" name="ID_LOCKUPDELAY">
+                  <value>5</value>
+                  <min>0</min>
+                  <max>999</max>
+                  <XRCED>
+                    <assign_var>1</assign_var>
+                  </XRCED>
+                </object>
+                <flag>wxEXPAND</flag>
+              </object>
+              <object class="sizeritem">
+                <object class="wxStaticText">
+                  <label>Delay before &amp;frame</label>
+                </object>
+              </object>
+              <object class="sizeritem">
+                <object class="wxSpinCtrl" name="ID_FRAMEDELAY">
+                  <value>5</value>
+                  <min>0</min>
+                  <max>999</max>
+                  <XRCED>
+                    <assign_var>1</assign_var>
+                  </XRCED>
+                </object>
+                <flag>wxEXPAND</flag>
+              </object>
+            </object>
+            <flag>wxALL|wxEXPAND</flag>
+            <border>8</border>
+          </object>
+          <label>Camera Shutter setup</label>
+          <orient>wxVERTICAL</orient>
+        </object>
+        <flag>wxEXPAND|wxALL</flag>
+        <border>8</border>
+      </object>
+      <object class="sizeritem">
+        <object class="wxStaticBoxSizer">
+          <object class="sizeritem">
+            <object class="wxGridSizer">
+              <cols>2</cols>
+              <rows>3</rows>
+              <vgap>8</vgap>
+              <hgap>8</hgap>
+              <object class="sizeritem">
+                <object class="wxStaticText">
+                  <label>Mount &amp;Type</label>
+                </object>
+              </object>
+              <object class="sizeritem">
+                <object class="wxChoice" name="ID_MOUNT_TYPE">
+                  <content>
+                    <item>Goto mount</item>
+                    <item>LX-200 mount</item>
+                  </content>
+                  <selection>0</selection>
+                  <bg>#A5BFFE</bg>
+                  <XRCED>
+                    <assign_var>1</assign_var>
+                  </XRCED>
+                </object>
+                <flag>wxEXPAND</flag>
+              </object>
+              <object class="sizeritem">
+                <object class="wxStaticText">
+                  <label>C&amp;om port</label>
+                </object>
+              </object>
+              <object class="sizeritem">
+                <object class="wxChoice" name="ID_COMPORT_EQ6">
+                  <size>120,-1</size>
+                  <content>
+                    <item>COM1</item>
+                    <item>COM2</item>
+                    <item>COM3</item>
+                    <item>COM4</item>
+                  </content>
+                  <selection>0</selection>
+                  <XRCED>
+                    <assign_var>1</assign_var>
+                  </XRCED>
+                </object>
+                <flag>wxEXPAND</flag>
+              </object>
+            </object>
+            <flag>wxALL|wxEXPAND</flag>
+            <border>8</border>
+          </object>
+          <label>Mount setup</label>
+          <orient>wxVERTICAL</orient>
+        </object>
+        <flag>wxEXPAND|wxALL</flag>
+        <border>8</border>
+      </object>
+      <object class="sizeritem">
+        <object class="wxBoxSizer">
+          <object class="sizeritem">
+            <object class="wxButton" name="ID_OK">
+              <label>&amp;Save</label>
+              <XRCED>
+                <events>EVT_BUTTON</events>
+                <assign_var>1</assign_var>
+              </XRCED>
+            </object>
+          </object>
+          <object class="sizeritem">
+            <object class="wxButton" name="ID_CANCEL">
+              <label>Cancel</label>
+              <XRCED>
+                <events>EVT_BUTTON</events>
+              </XRCED>
+            </object>
+            <flag>wxLEFT</flag>
+            <border>4</border>
+          </object>
+          <orient>wxHORIZONTAL</orient>
+        </object>
+        <flag>wxALL|wxALIGN_CENTRE_HORIZONTAL</flag>
+        <border>8</border>
+      </object>
+    </object>
+    <title>VAuto options</title>
+    <font>
+      <size>11</size>
+      <style>normal</style>
+      <weight>normal</weight>
+      <underlined>0</underlined>
+      <family>swiss</family>
+      <face>Tahoma</face>
+      <encoding>WINDOWS-1250</encoding>
+    </font>
+  </object>
+  <object class="wxDialog" name="About">
+    <object class="wxBoxSizer">
+      <orient>wxVERTICAL</orient>
+      <object class="sizeritem">
+        <object class="wxPanel">
+          <object class="wxBoxSizer">
+            <object class="sizeritem">
+              <object class="wxStaticBitmap">
+                <bitmap>dslr.png</bitmap>
+              </object>
+              <flag>wxALL</flag>
+              <border>8</border>
+            </object>
+            <object class="sizeritem">
+              <object class="wxBoxSizer">
+                <object class="sizeritem">
+                  <object class="wxStaticText">
+                    <label>DSLR Imaging with Mount Control</label>
+                    <font>
+                      <size>11</size>
+                      <style>normal</style>
+                      <weight>normal</weight>
+                      <underlined>0</underlined>
+                      <family>swiss</family>
+                      <face>Tahoma</face>
+                      <encoding>WINDOWS-1250</encoding>
+                    </font>
+                  </object>
+                </object>
+                <object class="sizeritem">
+                  <object class="wxStaticText" name="DEVICE_TEXT">
+                    <label>Canon EOS 350D, Goto mount</label>
+                    <font>
+                      <size>8</size>
+                      <style>normal</style>
+                      <weight>normal</weight>
+                      <underlined>0</underlined>
+                      <family>swiss</family>
+                      <face>Tahoma</face>
+                      <encoding>WINDOWS-1250</encoding>
+                    </font>
+                    <XRCED>
+                      <assign_var>1</assign_var>
+                    </XRCED>
+                  </object>
+                  <flag>wxTOP</flag>
+                  <border>2</border>
+                </object>
+                <orient>wxVERTICAL</orient>
+              </object>
+              <flag>wxALIGN_CENTRE_VERTICAL|wxRIGHT</flag>
+              <border>8</border>
+            </object>
+            <orient>wxHORIZONTAL</orient>
+          </object>
+          <fg>#800000</fg>
+          <bg>#FFFFFF</bg>
+          <style>wxSIMPLE_BORDER</style>
+        </object>
+        <flag>wxEXPAND</flag>
+      </object>
+      <object class="sizeritem">
+        <object class="wxBoxSizer">
+          <object class="sizeritem">
+            <object class="wxStaticText" name="ID_ABOUT">
+              <label>VAuto, version 1.0
+Copyright (c) KVI, 2009.</label>
+              <XRCED>
+                <assign_var>1</assign_var>
+              </XRCED>
+            </object>
+          </object>
+          <object class="sizeritem">
+            <object class="wxStaticText">
+              <label>Supported camera types: Canon EOS 350D
+Supported mount types: Goto, LX-200</label>
+              <font>
+                <size>9</size>
+                <style>normal</style>
+                <weight>normal</weight>
+                <underlined>0</underlined>
+                <family>swiss</family>
+                <face>Tahoma</face>
+                <encoding>WINDOWS-1250</encoding>
+              </font>
+            </object>
+            <flag>wxTOP|wxBOTTOM</flag>
+            <border>8</border>
+          </object>
+          <object class="sizeritem">
+            <object class="wxButton" name="wxID_CLOSE">
+              <label>Close</label>
+              <XRCED>
+                <events>EVT_BUTTON</events>
+              </XRCED>
+            </object>
+            <flag>wxALIGN_CENTRE_HORIZONTAL|wxALL</flag>
+            <border>8</border>
+          </object>
+          <orient>wxVERTICAL</orient>
+        </object>
+        <flag>wxALL|wxEXPAND</flag>
+        <border>8</border>
+      </object>
+    </object>
+    <title>About VAuto</title>
+    <font>
+      <size>11</size>
+      <style>normal</style>
+      <weight>normal</weight>
+      <underlined>0</underlined>
+      <family>swiss</family>
+      <face>Tahoma</face>
+      <encoding>WINDOWS-1250</encoding>
+    </font>
+  </object>
+  <object class="wxPropertySheetDialog" name="VautoMainNew">
+    <object class="propertysheetpage">
+      <object class="wxPanel">
+        <object class="wxBoxSizer">
+          <orient>wxVERTICAL</orient>
+          <object class="sizeritem">
+            <object class="wxStaticBoxSizer">
+              <object class="sizeritem">
+                <object class="wxFlexGridSizer">
+                  <object class="sizeritem">
+                    <object class="wxStaticText">
+                      <label>&amp;Object name</label>
+                    </object>
+                    <flag>wxALIGN_CENTRE_VERTICAL</flag>
+                  </object>
+                  <object class="sizeritem">
+                    <object class="wxBoxSizer">
+                      <orient>wxHORIZONTAL</orient>
+                      <object class="sizeritem">
+                        <object class="wxTextCtrl" name="ID_OBJNAME">
+                          <XRCED>
+                            <assign_var>1</assign_var>
+                          </XRCED>
+                        </object>
+                      </object>
+                      <object class="sizeritem">
+                        <object class="wxBitmapButton" name="Goobject">
+                          <bitmap>next18.png</bitmap>
+                          <XRCED>
+                            <events>EVT_BUTTON</events>
+                            <assign_var>1</assign_var>
+                          </XRCED>
+                        </object>
+                      </object>
+                    </object>
+                  </object>
+                  <object class="sizeritem">
+                    <object class="wxStaticText">
+                      <label>&amp;Number of frames</label>
+                    </object>
+                    <flag>wxALIGN_CENTRE_VERTICAL</flag>
+                  </object>
+                  <object class="sizeritem">
+                    <object class="wxSpinCtrl" name="ID_FRAMECOUNT">
+                      <value>1</value>
+                      <min>1</min>
+                      <max>999</max>
+                      <XRCED>
+                        <assign_var>1</assign_var>
+                      </XRCED>
+                    </object>
+                  </object>
+                  <object class="sizeritem">
+                    <object class="wxStaticText">
+                      <label>&amp;Duration (sec)</label>
+                    </object>
+                    <flag>wxALIGN_CENTRE_VERTICAL</flag>
+                  </object>
+                  <cols>2</cols>
+                  <object class="sizeritem">
+                    <object class="wxSpinCtrl" name="ID_DURATION">
+                      <value>60</value>
+                      <min>1</min>
+                      <max>999</max>
+                      <XRCED>
+                        <assign_var>1</assign_var>
+                      </XRCED>
+                    </object>
+                  </object>
+                  <rows>2</rows>
+                  <vgap>8</vgap>
+                  <hgap>8</hgap>
+                  <growablecols>0</growablecols>
+                </object>
+                <flag>wxALL|wxEXPAND</flag>
+                <border>8</border>
+              </object>
+              <label>Manual exposure control</label>
+              <orient>wxVERTICAL</orient>
+            </object>
+            <flag>wxALL | wxEXPAND</flag>
+            <border>8</border>
+          </object>
+          <object class="sizeritem">
+            <object class="wxStaticBoxSizer">
+              <label>Observations plan file</label>
+              <orient>wxHORIZONTAL</orient>
+              <object class="sizeritem">
+                <object class="wxBitmapButton" name="ID_OPENPLAN">
+                  <bitmap>openc24.png</bitmap>
+                  <XRCED>
+                    <events>EVT_BUTTON</events>
+                    <assign_var>1</assign_var>
+                  </XRCED>
+                </object>
+                <flag>wxLEFT|wxTOP|wxBOTTOM</flag>
+                <border>8</border>
+              </object>
+              <object class="sizeritem">
+                <object class="wxBitmapButton" name="ID_DELETEPLAN">
+                  <bitmap>delete24.png</bitmap>
+                  <XRCED>
+                    <events>EVT_BUTTON</events>
+                    <assign_var>1</assign_var>
+                  </XRCED>
+                </object>
+                <flag>wxTOP|wxBOTTOM|wxRIGHT</flag>
+                <border>8</border>
+              </object>
+              <object class="sizeritem">
+                <object class="wxStaticText" name="ID_PLANFILE">
+                  <size>225,-1</size>
+                  <label>(none)</label>
+                  <XRCED>
+                    <assign_var>1</assign_var>
+                  </XRCED>
+                </object>
+                <flag>wxTOP|wxBOTTOM|wxRIGHT|wxALIGN_CENTRE_VERTICAL</flag>
+                <border>8</border>
+              </object>
+            </object>
+            <flag>wxLEFT|wxRIGHT|wxEXPAND</flag>
+            <border>8</border>
+          </object>
+          <object class="sizeritem">
+            <object class="wxBoxSizer">
+              <object class="sizeritem">
+                <object class="wxButton" name="ID_START">
+                  <label>&amp;Start</label>
+                  <XRCED>
+                    <events>EVT_BUTTON</events>
+                    <assign_var>1</assign_var>
+                  </XRCED>
+                </object>
+              </object>
+              <object class="sizeritem">
+                <object class="wxButton" name="ID_ABORT">
+                  <label>&amp;Abort</label>
+                  <enabled>0</enabled>
+                  <XRCED>
+                    <events>EVT_BUTTON</events>
+                    <assign_var>1</assign_var>
+                  </XRCED>
+                </object>
+                <flag>wxLEFT</flag>
+                <border>4</border>
+              </object>
+              <object class="sizeritem">
+                <object class="wxBitmapButton" name="ID_OPTIONS">
+                  <bitmap>settings20.png</bitmap>
+                  <XRCED>
+                    <events>EVT_BUTTON</events>
+                    <assign_var>1</assign_var>
+                  </XRCED>
+                </object>
+                <flag>wxLEFT</flag>
+                <border>4</border>
+              </object>
+              <object class="spacer">
+                <size>24,1</size>
+                <flag>wxGROW</flag>
+              </object>
+              <object class="sizeritem">
+                <object class="wxBitmapButton" name="ID_ABOUT">
+                  <bitmap>help20.png</bitmap>
+                  <XRCED>
+                    <events>EVT_BUTTON</events>
+                  </XRCED>
+                </object>
+              </object>
+              <orient>wxHORIZONTAL</orient>
+              <object class="sizeritem">
+                <object class="wxButton" name="wxID_EXIT">
+                  <label>E&amp;xit</label>
+                  <XRCED>
+                    <events>EVT_BUTTON</events>
+                  </XRCED>
+                </object>
+                <flag>wxLEFT</flag>
+                <border>4</border>
+              </object>
+            </object>
+            <flag>wxALL|wxEXPAND</flag>
+            <border>8</border>
+          </object>
+          <object class="sizeritem">
+            <object class="wxPanel">
+              <object class="wxBoxSizer">
+                <orient>wxVERTICAL</orient>
+                <object class="sizeritem">
+                  <object class="wxStaticText" name="StatusBar">
+                    <label>StatusBar</label>
+                    <font>
+                      <size>10</size>
+                      <style>normal</style>
+                      <weight>normal</weight>
+                      <underlined>0</underlined>
+                      <family>swiss</family>
+                      <face>Tahoma</face>
+                      <encoding>WINDOWS-1250</encoding>
+                    </font>
+                    <XRCED>
+                      <assign_var>1</assign_var>
+                    </XRCED>
+                  </object>
+                  <flag>wxEXPAND|wxALL</flag>
+                  <border>4</border>
+                </object>
+              </object>
+              <bg>#F9FFAA</bg>
+            </object>
+            <flag>wxEXPAND</flag>
+          </object>
+        </object>
+      </object>
+      <label>Control</label>
+      <bitmap>next20.png</bitmap>
+    </object>
+    <object class="propertysheetpage">
+      <object class="wxListbook" name="IDC_LIST">
+        <object class="listbookpage">
+          <object class="wxPanel">
+            <object class="wxBoxSizer">
+              <orient>wxVERTICAL</orient>
+              <object class="sizeritem">
+                <object class="wxStaticBoxSizer">
+                  <object class="sizeritem">
+                    <object class="wxGridSizer">
+                      <cols>2</cols>
+                      <rows>3</rows>
+                      <vgap>8</vgap>
+                      <hgap>8</hgap>
+                      <object class="sizeritem">
+                        <object class="wxStaticText">
+                          <label>Came&amp;ra Type</label>
+                        </object>
+                      </object>
+                      <object class="sizeritem">
+                        <object class="wxChoice" name="ID_CAMERA_TYPE">
+                          <content>
+                            <item>Canon EOS 350D</item>
+                          </content>
+                          <selection>0</selection>
+                          <bg>#A5BFFE</bg>
+                          <XRCED>
+                            <assign_var>1</assign_var>
+                          </XRCED>
+                        </object>
+                        <flag>wxEXPAND</flag>
+                      </object>
+                      <object class="sizeritem">
+                        <object class="wxStaticText">
+                          <label>&amp;Com port</label>
+                        </object>
+                      </object>
+                      <object class="sizeritem">
+                        <object class="wxChoice" name="ID_COMPORT">
+                          <content>
+                            <item>COM1</item>
+                            <item>COM2</item>
+                            <item>COM3</item>
+                            <item>COM4</item>
+                          </content>
+                          <selection>0</selection>
+                          <XRCED>
+                            <assign_var>1</assign_var>
+                          </XRCED>
+                        </object>
+                        <flag>wxEXPAND</flag>
+                      </object>
+                      <object class="sizeritem">
+                        <object class="wxCheckBox" name="ID_LOCKUP">
+                          <label>&amp;Mirror lockup</label>
+                          <checked>1</checked>
+                          <XRCED>
+                            <events>EVT_CHECKBOX</events>
+                            <assign_var>1</assign_var>
+                          </XRCED>
+                        </object>
+                      </object>
+                      <object class="spacer"/>
+                      <object class="sizeritem">
+                        <object class="wxStaticText" name="IDT_LOCKUPDELAY">
+                          <label>Delay after &amp;lockup</label>
+                          <XRCED>
+                            <assign_var>1</assign_var>
+                          </XRCED>
+                        </object>
+                      </object>
+                      <object class="sizeritem">
+                        <object class="wxSpinCtrl" name="ID_LOCKUPDELAY">
+                          <value>5</value>
+                          <min>0</min>
+                          <max>999</max>
+                          <XRCED>
+                            <assign_var>1</assign_var>
+                          </XRCED>
+                        </object>
+                        <flag>wxEXPAND</flag>
+                      </object>
+                      <object class="sizeritem">
+                        <object class="wxStaticText">
+                          <label>Delay after &amp;frame</label>
+                        </object>
+                      </object>
+                      <object class="sizeritem">
+                        <object class="wxSpinCtrl" name="ID_FRAMEDELAY">
+                          <value>5</value>
+                          <min>0</min>
+                          <max>999</max>
+                          <XRCED>
+                            <assign_var>1</assign_var>
+                          </XRCED>
+                        </object>
+                        <flag>wxEXPAND</flag>
+                      </object>
+                    </object>
+                    <flag>wxALL|wxEXPAND</flag>
+                    <border>8</border>
+                  </object>
+                  <label>Camera Shutter setup</label>
+                  <orient>wxVERTICAL</orient>
+                </object>
+                <flag>wxALL</flag>
+                <border>8</border>
+              </object>
+            </object>
+          </object>
+          <label>Camera</label>
+          <bitmap>dslr.png</bitmap>
+        </object>
+        <object class="listbookpage">
+          <object class="wxPanel">
+            <object class="wxBoxSizer">
+              <orient>wxVERTICAL</orient>
+              <object class="sizeritem">
+                <object class="wxStaticBoxSizer">
+                  <object class="sizeritem">
+                    <object class="wxGridSizer">
+                      <cols>2</cols>
+                      <rows>3</rows>
+                      <vgap>8</vgap>
+                      <hgap>8</hgap>
+                      <object class="sizeritem">
+                        <object class="wxStaticText">
+                          <label>Mount &amp;Type</label>
+                        </object>
+                      </object>
+                      <object class="sizeritem">
+                        <object class="wxChoice" name="ID_MOUNT_TYPE">
+                          <content>
+                            <item>Goto mount</item>
+                            <item>LX-200 mount</item>
+                          </content>
+                          <selection>0</selection>
+                          <bg>#A5BFFE</bg>
+                          <XRCED>
+                            <assign_var>1</assign_var>
+                          </XRCED>
+                        </object>
+                        <flag>wxEXPAND</flag>
+                      </object>
+                      <object class="sizeritem">
+                        <object class="wxStaticText">
+                          <label>C&amp;om port</label>
+                        </object>
+                      </object>
+                      <object class="sizeritem">
+                        <object class="wxChoice" name="ID_COMPORT_EQ6">
+                          <size>120,-1</size>
+                          <content>
+                            <item>COM1</item>
+                            <item>COM2</item>
+                            <item>COM3</item>
+                            <item>COM4</item>
+                          </content>
+                          <selection>0</selection>
+                          <XRCED>
+                            <assign_var>1</assign_var>
+                          </XRCED>
+                        </object>
+                        <flag>wxEXPAND</flag>
+                      </object>
+                    </object>
+                    <flag>wxALL|wxEXPAND</flag>
+                    <border>8</border>
+                  </object>
+                  <label>Mount setup</label>
+                  <orient>wxVERTICAL</orient>
+                </object>
+                <flag>wxALL</flag>
+                <border>8</border>
+              </object>
+            </object>
+          </object>
+          <label>Mount</label>
+          <bitmap>mount.png</bitmap>
+        </object>
+        <object class="listbookpage">
+          <object class="wxPanel"/>
+          <label>Station</label>
+          <bitmap>station.png</bitmap>
+        </object>
+        <style>wxLB_LEFT</style>
+      </object>
+      <label>Options</label>
+      <bitmap>settings20.png</bitmap>
+    </object>
+    <title>Options</title>
+    <sheetstyle>wxPROPSHEET_LISTBOOK|wxPROPSHEET_SHRINKTOFIT</sheetstyle>
+    <buttons>wxOK|wxCANCEL</buttons>
+    <style>wxDEFAULT_DIALOG_STYLE</style>
+  </object>
+  <object class="wxDialog" name="OptionsNew">
+    <object class="wxBoxSizer">
+      <orient>wxVERTICAL</orient>
+      <object class="sizeritem">
+        <object class="wxPanel">
+          <object class="wxBoxSizer">
+            <object class="sizeritem">
+              <object class="wxStaticBitmap">
+                <bitmap>dslr.png</bitmap>
+              </object>
+              <flag>wxALL</flag>
+              <border>8</border>
+            </object>
+            <object class="sizeritem">
+              <object class="wxBoxSizer">
+                <object class="sizeritem">
+                  <object class="wxStaticText">
+                    <label>DSLR Imaging with Mount Control</label>
+                    <font>
+                      <size>11</size>
+                      <style>normal</style>
+                      <weight>normal</weight>
+                      <underlined>0</underlined>
+                      <family>swiss</family>
+                      <face>Tahoma</face>
+                      <encoding>WINDOWS-1250</encoding>
+                    </font>
+                  </object>
+                </object>
+                <object class="sizeritem">
+                  <object class="wxStaticText" name="DEVICE_TEXT">
+                    <label>Canon EOS 350D, Goto mount</label>
+                    <font>
+                      <size>8</size>
+                      <style>normal</style>
+                      <weight>normal</weight>
+                      <underlined>0</underlined>
+                      <family>swiss</family>
+                      <face>Tahoma</face>
+                      <encoding>WINDOWS-1250</encoding>
+                    </font>
+                    <XRCED>
+                      <assign_var>1</assign_var>
+                    </XRCED>
+                  </object>
+                  <flag>wxTOP</flag>
+                  <border>2</border>
+                </object>
+                <orient>wxVERTICAL</orient>
+              </object>
+              <flag>wxALIGN_CENTRE_VERTICAL</flag>
+            </object>
+            <orient>wxHORIZONTAL</orient>
+          </object>
+          <fg>#800000</fg>
+          <bg>#FFFFFF</bg>
+          <style>wxSIMPLE_BORDER</style>
+        </object>
+        <flag>wxEXPAND</flag>
+      </object>
+      <object class="sizeritem">
+        <object class="wxListbook" name="IDC_LIST">
+          <object class="listbookpage">
+            <object class="wxPanel">
+              <object class="wxBoxSizer">
+                <orient>wxVERTICAL</orient>
+                <object class="sizeritem">
+                  <object class="wxStaticBoxSizer">
+                    <object class="sizeritem">
+                      <object class="wxGridSizer">
+                        <cols>2</cols>
+                        <rows>3</rows>
+                        <vgap>8</vgap>
+                        <hgap>8</hgap>
+                        <object class="sizeritem">
+                          <object class="wxStaticText">
+                            <label>Came&amp;ra Type</label>
+                          </object>
+                          <flag>wxALIGN_CENTRE_VERTICAL</flag>
+                        </object>
+                        <object class="sizeritem">
+                          <object class="wxChoice" name="ID_CAMERA_TYPE">
+                            <content>
+                              <item>Canon EOS 350D</item>
+                            </content>
+                            <selection>0</selection>
+                            <bg>#A5BFFE</bg>
+                            <XRCED>
+                              <assign_var>1</assign_var>
+                            </XRCED>
+                          </object>
+                          <flag>wxEXPAND</flag>
+                        </object>
+                        <object class="sizeritem">
+                          <object class="wxStaticText">
+                            <label>&amp;Com port</label>
+                          </object>
+                          <flag>wxALIGN_CENTRE_VERTICAL</flag>
+                        </object>
+                        <object class="sizeritem">
+                          <object class="wxChoice" name="ID_COMPORT">
+                            <content>
+                              <item>COM1</item>
+                              <item>COM2</item>
+                              <item>COM3</item>
+                              <item>COM4</item>
+                            </content>
+                            <selection>0</selection>
+                            <XRCED>
+                              <assign_var>1</assign_var>
+                            </XRCED>
+                          </object>
+                          <flag>wxEXPAND</flag>
+                        </object>
+                        <object class="sizeritem">
+                          <object class="wxCheckBox" name="ID_LOCKUP">
+                            <label>&amp;Mirror lockup</label>
+                            <checked>1</checked>
+                            <XRCED>
+                              <events>EVT_CHECKBOX</events>
+                              <assign_var>1</assign_var>
+                            </XRCED>
+                          </object>
+                        </object>
+                        <object class="spacer"/>
+                        <object class="sizeritem">
+                          <object class="wxStaticText" name="IDT_LOCKUPDELAY">
+                            <label>Delay after &amp;lockup</label>
+                            <XRCED>
+                              <assign_var>1</assign_var>
+                            </XRCED>
+                          </object>
+                          <flag>wxALIGN_CENTRE_VERTICAL</flag>
+                        </object>
+                        <object class="sizeritem">
+                          <object class="wxSpinCtrl" name="ID_LOCKUPDELAY">
+                            <value>5</value>
+                            <min>0</min>
+                            <max>999</max>
+                            <XRCED>
+                              <assign_var>1</assign_var>
+                            </XRCED>
+                          </object>
+                          <flag>wxEXPAND</flag>
+                        </object>
+                        <object class="sizeritem">
+                          <object class="wxStaticText">
+                            <label>Delay after &amp;frame</label>
+                          </object>
+                          <flag>wxALIGN_CENTRE_VERTICAL</flag>
+                        </object>
+                        <object class="sizeritem">
+                          <object class="wxSpinCtrl" name="ID_FRAMEDELAY">
+                            <value>5</value>
+                            <min>0</min>
+                            <max>999</max>
+                            <XRCED>
+                              <assign_var>1</assign_var>
+                            </XRCED>
+                          </object>
+                          <flag>wxEXPAND</flag>
+                        </object>
+                      </object>
+                      <flag>wxALL|wxEXPAND</flag>
+                      <border>8</border>
+                    </object>
+                    <label>Camera Shutter setup</label>
+                    <orient>wxVERTICAL</orient>
+                  </object>
+                  <flag>wxALL|wxEXPAND</flag>
+                  <border>8</border>
+                </object>
+              </object>
+            </object>
+            <label>Camera</label>
+            <bitmap>dslr.png</bitmap>
+          </object>
+          <object class="listbookpage">
+            <object class="wxPanel">
+              <object class="wxBoxSizer">
+                <orient>wxVERTICAL</orient>
+                <object class="sizeritem">
+                  <object class="wxStaticBoxSizer">
+                    <object class="sizeritem">
+                      <object class="wxGridSizer">
+                        <cols>2</cols>
+                        <rows>3</rows>
+                        <vgap>8</vgap>
+                        <hgap>8</hgap>
+                        <object class="sizeritem">
+                          <object class="wxStaticText">
+                            <label>Mount &amp;Type</label>
+                          </object>
+                          <flag>wxALIGN_CENTRE_VERTICAL</flag>
+                        </object>
+                        <object class="sizeritem">
+                          <object class="wxChoice" name="ID_MOUNT_TYPE">
+                            <content>
+                              <item>Goto mount</item>
+                              <item>LX-200 mount</item>
+                            </content>
+                            <selection>0</selection>
+                            <bg>#A5BFFE</bg>
+                            <XRCED>
+                              <assign_var>1</assign_var>
+                            </XRCED>
+                          </object>
+                          <flag>wxEXPAND</flag>
+                        </object>
+                        <object class="sizeritem">
+                          <object class="wxStaticText">
+                            <label>C&amp;om port</label>
+                          </object>
+                          <flag>wxALIGN_CENTRE_VERTICAL</flag>
+                        </object>
+                        <object class="sizeritem">
+                          <object class="wxChoice" name="ID_COMPORT_EQ6">
+                            <size>120,-1</size>
+                            <content>
+                              <item>COM1</item>
+                              <item>COM2</item>
+                              <item>COM3</item>
+                              <item>COM4</item>
+                            </content>
+                            <selection>0</selection>
+                            <XRCED>
+                              <assign_var>1</assign_var>
+                            </XRCED>
+                          </object>
+                          <flag>wxEXPAND</flag>
+                        </object>
+                      </object>
+                      <flag>wxALL|wxEXPAND</flag>
+                      <border>8</border>
+                    </object>
+                    <label>Mount setup</label>
+                    <orient>wxVERTICAL</orient>
+                  </object>
+                  <flag>wxALL|wxEXPAND</flag>
+                  <border>8</border>
+                </object>
+              </object>
+            </object>
+            <label>Mount</label>
+            <bitmap>mount.png</bitmap>
+          </object>
+          <object class="listbookpage">
+            <object class="wxPanel">
+              <object class="wxBoxSizer">
+                <orient>wxVERTICAL</orient>
+                <object class="sizeritem">
+                  <object class="wxStaticBoxSizer">
+                    <object class="sizeritem">
+                      <object class="wxGridSizer">
+                        <cols>2</cols>
+                        <rows>3</rows>
+                        <vgap>8</vgap>
+                        <hgap>8</hgap>
+                        <object class="sizeritem">
+                          <object class="wxStaticText">
+                            <label>&amp;Longitude</label>
+                          </object>
+                          <flag>wxALIGN_CENTRE_VERTICAL</flag>
+                        </object>
+                        <object class="sizeritem">
+                          <object class="wxTextCtrl" name="ID_LONGITUDE">
+                            <XRCED>
+                              <assign_var>1</assign_var>
+                            </XRCED>
+                          </object>
+                          <flag>wxEXPAND</flag>
+                        </object>
+                        <object class="sizeritem">
+                          <object class="wxStaticText">
+                            <label>Latitu&amp;de</label>
+                          </object>
+                          <flag>wxALIGN_CENTRE_VERTICAL</flag>
+                        </object>
+                        <object class="sizeritem">
+                          <object class="wxTextCtrl" name="ID_LATITUDE">
+                            <XRCED>
+                              <assign_var>1</assign_var>
+                            </XRCED>
+                          </object>
+                          <flag>wxEXPAND</flag>
+                        </object>
+                      </object>
+                      <flag>wxALL|wxEXPAND</flag>
+                      <border>8</border>
+                    </object>
+                    <label>Station</label>
+                    <orient>wxVERTICAL</orient>
+                  </object>
+                  <flag>wxALL|wxEXPAND</flag>
+                  <border>8</border>
+                </object>
+              </object>
+            </object>
+            <label>Station</label>
+            <bitmap>station.png</bitmap>
+          </object>
+          <style>wxLB_LEFT</style>
+        </object>
+        <flag>wxALL</flag>
+        <border>8</border>
+      </object>
+      <object class="sizeritem">
+        <object class="wxBoxSizer">
+          <object class="sizeritem">
+            <object class="wxButton" name="ID_OK">
+              <label>&amp;Save</label>
+              <XRCED>
+                <events>EVT_BUTTON</events>
+                <assign_var>1</assign_var>
+              </XRCED>
+            </object>
+          </object>
+          <object class="sizeritem">
+            <object class="wxButton" name="ID_CANCEL">
+              <label>Cancel</label>
+              <XRCED>
+                <events>EVT_BUTTON</events>
+              </XRCED>
+            </object>
+            <flag>wxLEFT</flag>
+            <border>8</border>
+          </object>
+          <orient>wxHORIZONTAL</orient>
+        </object>
+        <flag>wxALL|wxALIGN_CENTRE_HORIZONTAL</flag>
+        <border>8</border>
+      </object>
+    </object>
+    <title>Options</title>
+  </object>
+</resource>
