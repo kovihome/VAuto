@@ -9,6 +9,7 @@
 #include "TelescopeNotifier.h"
 #include "CameraNotifier.h"
 #include "ObservationLog.h"
+#include "Station.h"
 #include "../../VTools/src/Properties.h"
 #include <wx/xrc/xmlres.h>
 #include <wx/filename.h>
@@ -19,7 +20,8 @@
 
 #define APP_NAME		"VAuto"
 #define APP_VERSION		"1.2"
-#define APP_COPYRIGHTS	"Copyrights (c) Kvi, 2009-2011." 
+#define APP_BUILD		"1003"
+#define APP_COPYRIGHTS	"Copyrights (c) Kvi, 2009-2012." 
 #define CONFIG_FILE		"vauto.cfg"
 
 #define CATALOG_NAME_GCVS		"gcvs"
@@ -36,11 +38,13 @@
 #include "../res/plan_up.xpm"
 #include "../res/plan_down.xpm"
 #include "../res/plan_disabled.xpm"
+//#include "../res/plan_moon.xpm"
 
-//basepath = os.path.abspath(os.path.dirname(sys.argv[0]))			## py:i18n
-//localedir = os.path.join(basepath, "locale")						## py:i18n
-//langid = wx.LANGUAGE_DEFAULT    									## py:i18n
-//domain = appName                									## py:i18n 
+#define PLAN_ICON_OK		0
+#define PLAN_ICON_UP		1
+#define PLAN_ICON_DOWN		2
+#define PLAN_ICON_DISABLED	3
+//#define PLAN_ICON_MOON		4
 
 //constellations = [
 //	'And','Ant','Aps','Aqr','Aql','Ara','Ari','Aur','Boo','Cae','Cam','Cnc',
@@ -104,6 +108,7 @@ VAutoDialog::VAutoDialog ()
 	m_SkipButton = XRCCTRL(*this, "ID_SKIP", wxButton);
 
 	m_StatusBar = XRCCTRL(*this, "ID_STATUS_BAR", wxStaticText);
+	m_StatusCoords = XRCCTRL(*this, "ID_STATUS_COORDS", wxStaticText);
 
 	m_ObjectName = XRCCTRL(*this, "ID_OBJNAME", wxTextCtrl);
 
@@ -127,6 +132,7 @@ VAutoDialog::VAutoDialog ()
 	imageList->Add (wxBitmap (plan_up_xpm));
 	imageList->Add (wxBitmap (plan_down_xpm));
 	imageList->Add (wxBitmap (plan_disabled_xpm));
+//	imageList->Add (wxBitmap (plan_moon_xpm));
 	m_PlanList->SetImageList (imageList, wxIMAGE_LIST_SMALL);
 
 }
@@ -158,34 +164,40 @@ VAutoDialog::~VAutoDialog ()
 
 void VAutoDialog::OnInitDialog (wxInitDialogEvent& event)
 {
-	m_LogWindow = new wxLogWindow (NULL, "VAuto Log");
+	m_LogWindow = new wxLogWindow (this, "VAuto Log", false);
 	wxLogDebug (wxString::Format ("%s, V%s", APP_NAME, APP_VERSION));
 	wxLogDebug (wxString::Format ("%s", APP_COPYRIGHTS));
 
 	m_Auto = false;
 	SetState (STATE_READY);
 
-//	self.s = None
-//	self.saveObjectName = ''
-//	self.saveDuration = 0
-//	self.saveFrameCount = 0
-//	self.currentObject = ''
-//	self.currentFrameCount = 0
-//	self.currentDuration = 0
+	SetStatusCoords ("");
 
 	m_HasPlan = false;
+
+	wxStandardPaths sp;
+	wxString logPath = sp.GetDataDir();
+	wxString planPath = sp.GetDocumentsDir();
 
 	/*
 	** VAuto properties defaults and load
 	*/
-	Properties::Instance().Put ("cameraType", "Canon EOS USB");	// Canon EOS on USB
-	Properties::Instance().Put ("mountType", "NexStar");		// NexStar/GoTo mount
-	Properties::Instance().Put ("comPort", "COM1");
-	Properties::Instance().Put ("lockup", true);
-	Properties::Instance().Put ("loackupDelay", 5);
-	Properties::Instance().Put ("frameDelay", 5);
-	Properties::Instance().Put ("comPortEq", "COM2");
-	Properties::Instance().Put ("manualGoto", true);
+	Properties::Instance().Put (CAMERA_TYPE, "Canon EOS USB");	// Canon EOS on USB
+	Properties::Instance().Put (MOUNT_TYPE, "NexStar");			// NexStar/GoTo mount
+	Properties::Instance().Put (CAMERA_PORT, "COM1");
+	Properties::Instance().Put (CAMERA_LOCKUP, true);
+	Properties::Instance().Put (CAMERA_LOCKUP_DELAY, 5);
+	Properties::Instance().Put (CAMERA_FRAME_DELAY, 5);
+	Properties::Instance().Put (CAMERA_ISO_SPEED, "800");
+	Properties::Instance().Put (CAMERA_BATTERY_MIN_LEVEL, 30);
+	Properties::Instance().Put (MOUNT_PORT, "COM2");
+	Properties::Instance().Put (MANUAL_GOTO, true);
+	Properties::Instance().Put (STATION_LONGITUDE, "");
+	Properties::Instance().Put (STATION_LATITUDE, "");
+	Properties::Instance().Put (DEBUG_LOG_WINDOW, true);
+	Properties::Instance().Put (NEXT_FRAMESTACK_ID, 1);
+	Properties::Instance().Put (OBSERVATION_LOG_FOLDER, logPath);
+	Properties::Instance().Put (PLAN_FOLDER, planPath);
 	Properties::Instance().Load (CONFIG_FILE);
 
 	/*
@@ -202,20 +214,33 @@ void VAutoDialog::OnInitDialog (wxInitDialogEvent& event)
 		Properties::Instance().Get (CAMERA_TYPE),
 		Properties::Instance().Get (CAMERA_PORT));
 
+	/*
+	** TODO: Lehet hogy egszerûbb lenne, ha a kamera megkapná az egész Properties cuccot, és
+	**	beállítaná magának, amit lehet. Ugyan ez az opciók módosításánál.
+	*/
+	if (m_camera != NULL)
+	{
+		if (m_camera->HasFeature (Camera::DCP_CAN_SET_ISO_SPEED)) {
+			unsigned long isoSpeed = wxAtol (Properties::Instance().Get (CAMERA_ISO_SPEED));
+			m_camera->SetIsoSpeed (isoSpeed);
+			}
+	}
+
 	SetDeviceText ();
 
 	/*
 	** Create path for observation log files
 	*/
-	wxStandardPaths sp;
-	wxString logPath = sp.GetDataDir();
-	if (logPath.Last () != '/' && logPath.Last() != '\\')
-		logPath += "/";
-	logPath += "logs";
-	if (!wxDirExists(logPath)) {
-		wxMkdir (logPath);
-		}
-	ObservationLog::Instance().SetPath (logPath);
+//	wxStandardPaths sp;
+//	wxString logPath = sp.GetDataDir();
+//	if (logPath.Last () != '/' && logPath.Last() != '\\')
+//		logPath += "/";
+//	logPath += "logs";
+//	if (!wxDirExists(logPath)) {
+//		wxMkdir (logPath);
+//		}
+//	ObservationLog::Instance().SetPath (logPath);
+	ObservationLog::Instance().SetPath (Properties::Instance().Get (OBSERVATION_LOG_FOLDER));
 
 	/*
 	** Load catalogs: GCVS, NSV, NGC/IC, Program
@@ -223,13 +248,15 @@ void VAutoDialog::OnInitDialog (wxInitDialogEvent& event)
 	wxString dataPath = sp.GetLocalDataDir () + "/catalogs";
 	wxLogDebug ("Data Path: " + dataPath);
 
-	CatalogFactory::Instance().Add (CATALOG_NAME_GCVS, dataPath);
-	CatalogFactory::Instance().Add (CATALOG_NAME_NSV, dataPath);
-	CatalogFactory::Instance().Get (CATALOG_NAME_NSV, "").AddPrefix (CATALOG_NAME_NSV);
-	CatalogFactory::Instance().Add (CATALOG_NAME_NGC, dataPath);
-	CatalogFactory::Instance().Get (CATALOG_NAME_NGC, "").AddPrefix (CATALOG_NAME_NGC);
-	CatalogFactory::Instance().Get (CATALOG_NAME_NGC, "").AddPrefix (CATALOG_NAME_IC);
-	CatalogFactory::Instance().Add (CATALOG_NAME_PROGRAM, dataPath);
+//	CatalogFactory::Instance().Add (CATALOG_NAME_GCVS, dataPath);
+//	CatalogFactory::Instance().Add (CATALOG_NAME_NSV, dataPath);
+//	CatalogFactory::Instance().Get (CATALOG_NAME_NSV, "").AddPrefix (CATALOG_NAME_NSV);
+//	CatalogFactory::Instance().Add (CATALOG_NAME_NGC, dataPath);
+//	CatalogFactory::Instance().Get (CATALOG_NAME_NGC, "").AddPrefix (CATALOG_NAME_NGC);
+//	CatalogFactory::Instance().Get (CATALOG_NAME_NGC, "").AddPrefix (CATALOG_NAME_IC);
+//	CatalogFactory::Instance().Add (CATALOG_NAME_PROGRAM, dataPath);
+
+	CatalogFactory::Instance().AddAll (wxT("*.cat"), dataPath);
 
 	/*
 	** Clear current target info
@@ -239,6 +266,8 @@ void VAutoDialog::OnInitDialog (wxInitDialogEvent& event)
 	m_DisplayDecl->SetLabel ("");
 
 	DoDisableControls (FALSE);
+
+	m_LogWindow->Show (Properties::Instance().GetBool(DEBUG_LOG_WINDOW));
 
 	Refresh ();
 }
@@ -254,17 +283,19 @@ void VAutoDialog::OnOpenPlan(wxCommandEvent& ev)
 	/*
 	** Select the plan file
 	*/
-	wxFileDialog *fd = new wxFileDialog (this, _("Open plan file"), "./", "plan.csv", "*.csv", wxFD_OPEN | wxFD_FILE_MUST_EXIST);
+	wxFileDialog *fd = new wxFileDialog (this, _("Open plan file"), Properties::Instance().Get (PLAN_FOLDER), wxEmptyString, wxT("*.plan"), wxFD_OPEN | wxFD_FILE_MUST_EXIST);
 	int rv = fd->ShowModal();
 	if (rv == wxID_CANCEL)
 		return;
-	wxString planfn = fd->GetPath ();
+
+	wxFileName fn (fd->GetPath ());
+	Properties::Instance().Put (PLAN_FOLDER, fn.GetPath());
+	Properties::Instance().Save (CONFIG_FILE);
 
 	/*
 	** Open the plan file as a catalog
 	*/
-	wxFileName fn (planfn);
-	m_Plan = CatalogFactory::Instance().Get (fn.GetName(), fn.GetPath());
+	m_Plan = CatalogFactory::Instance().Open (fn.GetFullName(), fn.GetPath());
 
 	m_PlanList->DeleteAllItems ();
 
@@ -288,7 +319,10 @@ void VAutoDialog::OnOpenPlan(wxCommandEvent& ev)
 		item.m_text = "";
 		m_PlanList->InsertItem (item);
 
-		m_PlanList->SetItemImage (j, 0);
+		if (!IsTargetAboveHorizon (targets[j]))
+			m_PlanList->SetItemImage (j, PLAN_ICON_DISABLED);
+		else
+			m_PlanList->SetItemImage (j, PLAN_ICON_OK);
 
 		// second column: name
 		//
@@ -369,12 +403,20 @@ void VAutoDialog::SetStatusText (const wxString& text)
 	m_StatusBar->SetLabel (text);
 }
 
+void VAutoDialog::SetStatusCoords (const wxString& text)
+{
+	m_StatusCoords->SetLabel (text);
+	m_StatusCoords->Refresh ();
+}
+
 void VAutoDialog::DoInvokeOptionsDialog(void)
 {
 	wxString mountType = Properties::Instance().Get(MOUNT_TYPE);
 	wxString mountPort = Properties::Instance().Get(MOUNT_PORT);
 	wxString cameraType = Properties::Instance().Get(CAMERA_TYPE);
 	wxString cameraPort = Properties::Instance().Get(CAMERA_PORT);
+	wxString observationLogPath = Properties::Instance().Get (OBSERVATION_LOG_FOLDER);
+	wxString isoSpeed = Properties::Instance().Get (CAMERA_ISO_SPEED);
 
 	OptionsDialog *dlg = new OptionsDialog (this);
 	int rv = dlg->ShowModal ();
@@ -389,17 +431,32 @@ void VAutoDialog::DoInvokeOptionsDialog(void)
 				Properties::Instance().Get(MOUNT_PORT));
 			}
 
+		bool newCamera = false;
 		if (Properties::Instance().Get(CAMERA_TYPE) != cameraType ||
 			Properties::Instance().Get(CAMERA_PORT) != cameraPort) {
-			CameraFactory::Instance().ClearCamera();
+//			CameraFactory::Instance().ClearCamera();
+			wxDELETE (m_camera);
 			m_camera = CameraFactory::Instance().GetCamera (
 				Properties::Instance().Get(CAMERA_TYPE),
 				Properties::Instance().Get(CAMERA_PORT));
+			newCamera = true;
+			}
+
+		if (Properties::Instance().Get (OBSERVATION_LOG_FOLDER) != observationLogPath) {
+			ObservationLog::Instance().SetPath (Properties::Instance().Get (OBSERVATION_LOG_FOLDER));
+			}
+
+		if (m_camera->HasFeature (Camera::DCP_CAN_SET_ISO_SPEED) && (newCamera || Properties::Instance().Get(CAMERA_ISO_SPEED) != isoSpeed)) {
+			unsigned long iso = wxAtol (Properties::Instance().Get(CAMERA_ISO_SPEED));
+			if (iso > 0)
+				m_camera->SetIsoSpeed (iso);
 			}
 
 		SetDeviceText ();
 
 		DoDisableControls (FALSE);
+
+		m_LogWindow->Show (Properties::Instance().GetBool(DEBUG_LOG_WINDOW));
 		}
 }
 
@@ -411,6 +468,16 @@ void VAutoDialog::OnAuto(wxCommandEvent& ev)
 
 	// Get next object from list
 	long selected = m_PlanList->GetNextItem (0, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+	if (selected == -1)	{
+		if (!NextPlanTarget ()) {
+			m_Auto = false;
+			SetState (STATE_READY);
+			DoDisableControls (false);
+			return;
+			}
+		selected = m_PlanList->GetNextItem (0, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+		}
+
 	TargetList& targets = m_Plan.GetAll ();
 	m_CurrentTarget = targets[selected];
 
@@ -419,6 +486,7 @@ void VAutoDialog::OnAuto(wxCommandEvent& ev)
 		m_Auto = false;
 		SetState (STATE_READY);
 		DoDisableControls (false);
+		return;
 		}
 
 	// The rest is on the notification methods...
@@ -431,21 +499,29 @@ void VAutoDialog::OnAuto(wxCommandEvent& ev)
 void VAutoDialog::OnFindObject(wxCommandEvent& ev)
 {
 	wxString objectName = m_ObjectName->GetValue ();
-	if (objectName.IsEmpty())
-		return;
-
-	Target& target = CatalogFactory::Instance().FindObject (objectName);
-
-	if (!target.IsValid()) {
-		wxMessageBox (_("Object not found in program or available catalogs."), _("Find Object"), wxICON_EXCLAMATION | wxOK, this);
-		return;
+	if (objectName.IsEmpty()) {
+		if (m_CurrentTarget.GetName().IsEmpty())
+			return;
+		m_CurrentTarget.SetName ("");
+		m_CurrentTarget.GetCoord().FromBin16(0,0);
+//		m_DisplayRa->SetLabel ("");
+//		m_DisplayDecl->SetLabel ("");
+		DisplayCurrentTarget ();
+		m_ObjectName->SetFocus();
 		}
 
-	m_CurrentTarget = target;
-	DisplayCurrentTarget ();
-
-	// set the focus to the Move button
-	m_MoveButton->SetFocus ();
+	else {
+		Target& target = CatalogFactory::Instance().FindObject (objectName);
+		if (!target.IsValid()) {
+			wxMessageBox (_("Object not found in program or available catalogs."), _("Find Object"), wxICON_EXCLAMATION | wxOK, this);
+			return;
+			}
+		m_CurrentTarget = target;
+		DisplayCurrentTarget ();
+	
+		// set the focus to the Move button
+		m_MoveButton->SetFocus ();
+		}
 
 	Refresh ();
 }
@@ -456,7 +532,7 @@ void VAutoDialog::DisplayCurrentTarget ()
 	wxString sRa, sDecl;
 	m_CurrentTarget.GetCoord().ToStringEq (sRa, sDecl);
 
-	m_DisplayName->SetLabel (m_CurrentTarget.GetName());
+	m_DisplayName->SetLabel (m_CurrentTarget.GetName().IsEmpty() ? _("(no selected object)") : m_CurrentTarget.GetName());
 	m_DisplayRa->SetLabel (sRa);
 	m_DisplayDecl->SetLabel (sDecl);
 
@@ -484,6 +560,7 @@ void VAutoDialog::Abort()
 		wxLogDebug (wxT("VAutoDialog::Abort detects camera shooting state."));
 		if (m_cameraNotifier->IsAlive ()) {
 			wxLogDebug (wxT("VAutoDialog::Abort abort notifier thread."));
+			m_camera->AbortShooting ();
 			m_cameraNotifier->Abort ();
 			}
 		else {
@@ -504,20 +581,12 @@ void VAutoDialog::OnExit(wxCommandEvent& ev)
 {
 	Abort ();
 	m_LogWindow->Flush ();
+	wxDELETE (m_camera);
 	EndModal (wxID_CLOSE);
 }
 
 void VAutoDialog::OnAbout(wxCommandEvent& ev)
 {
-	CameraArray& ca = CameraFactory::Instance().EnumerateCameras();
-
-	wxString t = "";
-	for (unsigned int j = 0; j < ca.Count(); j ++) {
-		t += ca.Item (j).GetName() + "\n";
-		}
-
-	wxMessageBox (t, "Online Cameras", wxOK, this);
-
 	AboutDialog *about = new AboutDialog (this);
 	about->ShowModal ();
 }
@@ -570,8 +639,6 @@ bool VAutoDialog::DoMove ()
 
 	// get coords
 	Coordinate& coord = m_CurrentTarget.GetCoord ();
-
-	// check horizon state
 
 	// check whether telescope is connected
 	if (!m_telescope->IsConnected()) {
@@ -638,6 +705,18 @@ void VAutoDialog::OnMove(wxCommandEvent& ev)
 		return;
 		}
 
+	// Check whether the target is above the horizon
+//	double lon = wxAtof (Properties::Instance().Get(STATION_LONGITUDE));
+//	double lat = wxAtof (Properties::Instance().Get(STATION_LATITUDE));
+//	Station station (lon, lat);
+//	if (!m_CurrentTarget.GetCoord().AboveHorizon(station, wxDateTime::Now().GetJulianDayNumber()))
+
+	if (!IsTargetAboveHorizon (m_CurrentTarget))
+	{
+		wxMessageBox (_("The object currently is under the horizon"), GetTitle(), wxICON_EXCLAMATION | wxOK, this);
+		return;
+	}
+
 	DoMove ();
 }
 
@@ -660,6 +739,9 @@ void VAutoDialog::OnNotifyTelescopeStop (wxCommandEvent& ev)
 		case TelescopeNotifier::STOP_ABORT:
 			accidentalStop = true;
 			wxMessageBox (_("The telescope stopped by the user."), _("Moving telescope"), wxICON_EXCLAMATION | wxOK, this);
+			break;
+		case TelescopeNotifier::DISPLAY_COORD:
+			SetStatusCoords (ev.GetString ());
 			break;
 		}
 
@@ -712,7 +794,6 @@ bool VAutoDialog::DoShoot ()
 		wxMessageBox (wxString::Format(_("Number of frames must be between %d and %d"), MIN_FRAME_COUNT, MAX_FRAME_COUNT), GetTitle (), wxICON_EXCLAMATION | wxOK, this);
 		return false;
 		}
-
 	int delayBeforeShoot = Properties::Instance().GetInt (CAMERA_FRAME_DELAY);
 	if (delayBeforeShoot < 0 || delayBeforeShoot > 999)
 		delayBeforeShoot = 0;
@@ -720,8 +801,13 @@ bool VAutoDialog::DoShoot ()
 	SetState (STATE_SHOOTING);
 	DoDisableControls (true);
 
-	ObservationLog::Instance().SetTargetName (m_CurrentTarget.GetName());
+	ObservationLog::Instance().SetTargetName (m_CurrentTarget.GetName().IsEmpty() ? m_ObjectName->GetValue() : m_CurrentTarget.GetName());
 	ObservationLog::Instance().SetCoord (m_CurrentTarget.GetCoord());
+
+	int stackId = Properties::Instance().GetInt (NEXT_FRAMESTACK_ID);
+	Properties::Instance().Put (NEXT_FRAMESTACK_ID, stackId + 1);
+	Properties::Instance().Save (CONFIG_FILE);
+	ObservationLog::Instance().SetFrameStackId (stackId);
 
 	m_camera->ShootMany (frameCount, 1000 * exposureTime, 1000 * delayBeforeShoot);
 
@@ -731,7 +817,7 @@ bool VAutoDialog::DoShoot ()
 	// set the focus on the abort button
 	m_AbortButton->SetFocus ();
 
-	// start telescope notifier thread
+	// start camera notifier thread
 	wxLogDebug (wxT("VAutoDialog::OnShoot starts camera notifier."));
 	m_cameraNotifier = new CameraNotifier (this, CAMERA_NOTIFIER_ID, m_camera, exposureTime);
 	wxThreadError err = m_cameraNotifier->Create ();
@@ -763,7 +849,7 @@ void VAutoDialog::OnNotifyCameraShoot (wxCommandEvent& ev)
 {
 	bool accidentalStop = false;
 	CameraNotifier::CameraShootAction shootAction = (CameraNotifier::CameraShootAction) ev.GetInt ();
-	wxLogDebug (wxString::Format("Camera notification arrived: %d", shootAction));
+//	wxLogDebug (wxString::Format("Camera notification arrived: %d", shootAction));
 
 	switch (shootAction) {
 		case CameraNotifier::SHOOT_NOTIFY_TIME: 
@@ -773,21 +859,19 @@ void VAutoDialog::OnNotifyCameraShoot (wxCommandEvent& ev)
 			}
 			break;
 		case CameraNotifier::SHOOT_STOP_NORMALLY:
-//			Log (wxString("OK"));
-			ObservationLog::Instance().SetStatus (wxT("OK"));
-			ObservationLog::Instance().Flush ();
+//			ObservationLog::Instance().SetStatus (wxT("OK"));
+//			ObservationLog::Instance().Flush ();
 			break;
 		case CameraNotifier::SHOOT_TIMEOUT:
-//			Log (wxString("Failed:timeout"));
-			ObservationLog::Instance().SetStatus (wxT("Failed:timeout"));
-			ObservationLog::Instance().Flush ();
+			m_camera->AbortShooting ();
+//			ObservationLog::Instance().SetStatus (LOG_STATUS_TIMEOUT);
+//			ObservationLog::Instance().Flush ();
 			wxMessageBox (_("The camera is not stop shooting before timeout expired."), _("Shooting"), wxICON_EXCLAMATION | wxOK, this);
 			accidentalStop = true;
 			break;
 		case CameraNotifier::SHOOT_ABORT:
-//			Log (wxString("Failed:abort"));
-			ObservationLog::Instance().SetStatus (wxT("Failed:abort"));
-			ObservationLog::Instance().Flush ();
+//			ObservationLog::Instance().SetStatus (wxT("Failed:abort"));
+//			ObservationLog::Instance().Flush ();
 			wxMessageBox (_("The exposition stopped by the user."), _("Shooting"), wxICON_EXCLAMATION | wxOK, this);
 			accidentalStop = true;
 			break;
@@ -834,12 +918,19 @@ void VAutoDialog::OnNotifyCameraShoot (wxCommandEvent& ev)
 
 bool VAutoDialog::NextPlanTarget()
 {
-	int selectedIndex = m_PlanList->GetNextItem (-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
-	if (selectedIndex == m_PlanList->GetItemCount () - 1)
-		return false;
-	m_PlanList->SetItemState (++selectedIndex, wxLIST_STATE_SELECTED | wxLIST_STATE_FOCUSED, wxLIST_STATE_SELECTED | wxLIST_STATE_FOCUSED);
-
 	TargetList& targets = m_Plan.GetAll();
+
+	int selectedIndex = m_PlanList->GetNextItem (-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED) + 1;
+	int itemCount = m_PlanList->GetItemCount ();
+
+	for (; selectedIndex < itemCount && !IsTargetAboveHorizon(targets[selectedIndex]); selectedIndex++);
+
+	if (selectedIndex == itemCount)
+		return false;
+
+	m_PlanList->SetItemState (selectedIndex, wxLIST_STATE_SELECTED | wxLIST_STATE_FOCUSED, wxLIST_STATE_SELECTED | wxLIST_STATE_FOCUSED);
+	m_PlanList->EnsureVisible (selectedIndex);
+
 	m_CurrentTarget = targets[selectedIndex];
 	DisplayCurrentTarget ();
 	m_MoveButton->SetFocus ();
@@ -892,3 +983,11 @@ void VAutoDialog::SetDeviceText ()
 	m_DeviceText->SetLabel (text);
 }
 
+bool VAutoDialog::IsTargetAboveHorizon (Target& target)
+{
+	// Check whether the target is above the horizon
+	double lon = wxAtof (Properties::Instance().Get(STATION_LONGITUDE));
+	double lat = wxAtof (Properties::Instance().Get(STATION_LATITUDE));
+	Station station (lon, lat);
+	return target.GetCoord().AboveHorizon(station, wxDateTime::Now().GetJulianDayNumber());
+}

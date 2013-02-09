@@ -18,6 +18,7 @@
 #define LOG_STATUS_OK		wxT("OK")
 #define LOG_STATUS_ABORT	wxT("Abort")
 #define LOG_STATUS_ERROR	wxT("Error")
+#define LOG_STATUS_TIMEOUT	wxT("Timeout");
 
 class ObservationLog :
 	private wxFile
@@ -31,6 +32,7 @@ private:
 
 	wxString m_FileName;
 
+	int m_FrameStackId;
 	wxString m_TargetName;
 	Coordinate m_Coord;
 	wxDateTime m_StartTime;
@@ -49,6 +51,7 @@ public:
 	void SetFrameIndex (int frameIndex);
 	void SetExpositonTime (int expositionTime);
 	void SetStatus (const wxString& status);
+	void SetFrameStackId (int stackId);
 
 	void Flush ();
 	void SetPath (const wxString& path);

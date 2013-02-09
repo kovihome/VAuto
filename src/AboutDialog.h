@@ -11,7 +11,7 @@
 #ifndef _ABOUT_DIALOG_H_
 #define _ABOUT_DIALOG_H_
 
-#include <wx\wx.h>
+#include <wx/wx.h>
 
 class AboutDialog :
 	public wxDialog

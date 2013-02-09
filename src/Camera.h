@@ -11,6 +11,7 @@
 #ifndef _CAMERA_SHOOT_TIMER_H_
 #define _CAMERA_SHOOT_TIMER_H_
 
+#include "OptionsDialog.h"
 #include <wx/wx.h>
 
 class Camera;
@@ -39,12 +40,15 @@ public:
 		DCP_USE_SERIAL = 1,
 		DCP_USE_USB,
 		DCP_HAS_MLU,
-		DCP_MLU_FOR_EVERY_FRAME
+		DCP_MLU_FOR_EVERY_FRAME,
+
+		DCP_CAN_SET_ISO_SPEED,
+		DCP_CAN_SET_SHUTTER_SPEED
 		};
 
-	Camera() : m_ShootTimer(this) {};
-	Camera(const wxString& port);
-	Camera(const Camera& camera);
+	Camera(bool needInit = true) : m_ShootTimer(this) {};
+	Camera(const wxString& port, bool needInit = true);
+	Camera(const Camera& camera, bool needInit = true);
 	virtual ~Camera();
 	Camera& operator= (const Camera& camera);
 
@@ -75,8 +79,16 @@ public:
 	ShootingState GetShootingState () { return m_shootingState; }
 	int GetDelayBeforeShoot () { return m_delayBeforeShoot; }
 
+	virtual unsigned long GetIsoSpeed() { return 0; }					// Reads the ISO speed from the camera
+	virtual bool SetIsoSpeed(unsigned long isoSpeed) { return false; }	// Sets the camera ISO speed
+
+	virtual double GetShutterSpeed () { return 0.0; }					// Reads the shutterspeed from the camera
+	virtual bool SetShutterSpeed (double shutterSpeed) { return false; }					// Sets the camera shutter speed
+
+
 protected:
 
+	bool m_initialzed;
 	wxString name;
 	wxString m_port;
 	long m_frameCount;

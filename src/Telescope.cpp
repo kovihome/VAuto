@@ -1,3 +1,7 @@
+#ifdef __WXMSW__
+    #include <wx/msw/msvcrt.h>      // redefines the new() operator 
+#endif 
+
 #include "Telescope.h"
 #include "../include/ctb/serport.h"
 
@@ -22,6 +26,10 @@ wxString Telescope::Slew (Coordinate& coord)
 	return "";
 }
 
+#define READ_BUFFER_SIZE	128
+#define READ_POLL_TIME		100 // ms
+#define READ_TIMEOUT		3500 // ms
+
 wxString Telescope::SendCommand (wxString command, int expectedAnswerSize)
 {
 	wxSerialPort* port = new wxSerialPort ();
@@ -34,17 +42,42 @@ wxString Telescope::SendCommand (wxString command, int expectedAnswerSize)
 	port->SetBaudRate (wxBAUD_9600);
 	port->Write ((char *) command.c_str(), command.Length());
 
-	int bytesRead = -1;
-	char buffer[128];
-	if (expectedAnswerSize > 0) {
-		int bytesRead = port->Read (buffer, expectedAnswerSize);
+	char *buffer = new char[READ_BUFFER_SIZE + 1];
+	buffer[READ_BUFFER_SIZE] = 0;
+	char *bufferPtr = buffer;
+
+	int timeout = READ_TIMEOUT; // ms
+	int bytesRead = 0;
+	int br;
+
+	while (timeout > 0) {
+		wxThread::Sleep (READ_POLL_TIME);
+		br = port->Read (bufferPtr, READ_BUFFER_SIZE - bytesRead);
+		if (br == 0 && bufferPtr != buffer)
+			break;
+		if (br != 0) {
+			bufferPtr += br * sizeof(char);
+			bytesRead += br;
+			if (bytesRead >= READ_BUFFER_SIZE) {
+				wxLogDebug ("Serial Buffer is full, command: %s, answer: %s", command, buffer);
+				port->Close ();
+				delete buffer;
+				delete port;
+				return "";
+				}
+			}
+		timeout -= READ_POLL_TIME;
 		}
+//	if (expectedAnswerSize > 0) {
+//		int bytesRead = port->Read (buffer, expectedAnswerSize);
+//		}
 	port->Close ();
 	delete port;
-	if (bytesRead != expectedAnswerSize) {
-		return "";
-		}
-	buffer[expectedAnswerSize] = 0;
+//	if (bytesRead != expectedAnswerSize) {
+//		return "";
+//		}
+//	buffer[expectedAnswerSize] = 0;
+	buffer[bytesRead] = 0;
 	return *new wxString(buffer);
 }
 

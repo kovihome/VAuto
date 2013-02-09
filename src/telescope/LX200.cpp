@@ -1,3 +1,7 @@
+#ifdef __WXMSW__
+    #include <wx/msw/msvcrt.h>      // redefines the new() operator 
+#endif 
+
 #include "LX200.h"
 
 LX200::LX200(wxString comPort)

@@ -56,6 +56,7 @@ private:
 	CameraFactory();
 	CameraFactory(const CameraFactory&);
 	CameraFactory& operator= (CameraFactory&);
+	virtual ~CameraFactory();
 
 	static CameraFactory* instance;
 	Camera* m_camera; 
@@ -64,7 +65,7 @@ public:
 	wxArrayString& EnumerateDrivers ();
 	wxString& GetDriverDisplayName (const wxString& driverType);
 	CameraArray EnumerateCameras ();
-	Camera* GetCamera (const wxString& cameraType, const wxString& comPort);
+	Camera* GetCamera (const wxString& cameraType, const wxString& comPort, bool needInit = true);
 	void ClearCamera ();
 
 };

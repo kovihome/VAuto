@@ -1,3 +1,7 @@
+#ifdef __WXMSW__
+    #include <wx/msw/msvcrt.h>      // redefines the new() operator 
+#endif 
+
 #include "TelescopeNotifier.h"
 
 TelescopeNotifier::TelescopeNotifier(wxWindow* parent, int id, Telescope* telescope)
@@ -6,6 +10,19 @@ TelescopeNotifier::TelescopeNotifier(wxWindow* parent, int id, Telescope* telesc
 	m_parent = parent;
 	m_telescope = telescope;
 	m_id = id;
+}
+
+void TelescopeNotifier::SendCoord ()
+{
+	wxLogDebug (wxT("TelescopeNotifier::SendCoord post a coordinate display notification event."));
+	Coordinate&	coord = m_telescope->GetEquatorialCoords ();
+	wxString ra, decl;
+	coord.ToStringEq (ra, decl);
+
+	wxCommandEvent ev (wxEVT_COMMAND_BUTTON_CLICKED, m_id);
+	ev.SetInt (DISPLAY_COORD);
+	ev.SetString (ra + " " + decl);
+	wxPostEvent (m_parent, ev);
 }
 
 void TelescopeNotifier::SendEvent (TelescopeNotifier::TelescopeStopAction stopAction)
@@ -20,7 +37,7 @@ void TelescopeNotifier::OnExit ()
 {
 }
 
-#define TELESCOPE_MOVING_TIMEOUT	20 // sec
+#define TELESCOPE_MOVING_TIMEOUT	30 // sec
 
 #define TN_SLEEP_TIME				1000 // ms	
 #define TN_TIMEOUT(s)				(s*1000/TN_SLEEP_TIME)
@@ -29,6 +46,8 @@ wxThread::ExitCode TelescopeNotifier::Entry ()
 {
 	int timeout = TN_TIMEOUT(TELESCOPE_MOVING_TIMEOUT);
 	m_abort = FALSE;
+
+	SendCoord ();
 
 	bool isConnected = m_telescope->IsConnected();
 	bool isMoving = m_telescope->IsMoving();
@@ -45,6 +64,8 @@ wxThread::ExitCode TelescopeNotifier::Entry ()
 			isMoving = m_telescope->IsMoving();
 			}
 //		cs.Leave ();
+
+		SendCoord ();
 		}
 
 	TelescopeNotifier::TelescopeStopAction stopAction;

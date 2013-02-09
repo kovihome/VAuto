@@ -1,3 +1,7 @@
+#ifdef __WXMSW__
+    #include <wx/msw/msvcrt.h>      // redefines the new() operator 
+#endif 
+
 #include "CameraFactory.h"
 #include <wx/arrimpl.cpp>
 #include "camera/CanonEosUsb.h"
@@ -24,8 +28,15 @@ CameraFactory& CameraFactory::Instance()
 
 CameraFactory::CameraFactory()
 {
+	m_camera = NULL;
+//	ClearCamera ();
+}
+
+CameraFactory::~CameraFactory()
+{
 	ClearCamera ();
 }
+
 
 
 wxArrayString& CameraFactory::EnumerateDrivers ()
@@ -82,36 +93,39 @@ CameraArray CameraFactory::EnumerateCameras ()
 }
 
 
-Camera* CameraFactory::GetCamera (const wxString& cameraType, const wxString& comPort)
+Camera* CameraFactory::GetCamera (const wxString& cameraType, const wxString& comPort, bool needInit)
 {
-	if (m_camera != NULL && m_camera->GetCameraType() != cameraType) {
-		delete m_camera;
-		m_camera = NULL;
-		}
+//	if (m_camera != NULL && m_camera->GetCameraType() != cameraType) {
+//		wxDELETE (m_camera);
+//		}
 
 	if (m_camera == NULL) {
 
 		// Canon EOS DSLR on USB port
 		if (cameraType == CAMERA_CANONEOSUSB) {
-			m_camera = new CanonEosUsb ();
+//			m_camera = new CanonEosUsb (needInit);
+			return new CanonEosUsb (needInit);
 			}
 
 		// Canon EOS Serial Shutter
 		else if (cameraType == CAMERA_CANONEOSSHUTTER) {
-			m_camera = new CanonEosShutter (comPort);
+//			m_camera = new CanonEosShutter (comPort, needInit);
+			return new CanonEosShutter (comPort, needInit);
 			}
 
 		// No camera
 		else {
-			m_camera = new Camera ();
+//			m_camera = new Camera (needInit);
+			return new Camera (needInit);
 			}
 		}
-	return m_camera;
+//	return m_camera;
+	return NULL;
 
 }
 
 void CameraFactory::ClearCamera ()
 {
-	m_camera = NULL;
+//	wxDELETE (m_camera);
 }
 

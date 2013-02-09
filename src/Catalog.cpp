@@ -1,4 +1,9 @@
+#ifdef __WXMSW__
+    #include <wx/msw/msvcrt.h>      // redefines the new() operator 
+#endif 
+
 #include "Catalog.h"
+#include "../../VTools/src/Properties.h"
 #include <wx/wfstream.h>
 #include <wx/txtstrm.h>
 #include <wx/tokenzr.h>
@@ -7,31 +12,35 @@
 
 WX_DEFINE_OBJARRAY (TargetList);
 
-Catalog::Catalog () : m_name("")
+Catalog::Catalog () : m_filename(""), m_name("")
 {
 	m_prefixList.Clear ();
 }
 
-Catalog::Catalog (const wxString& name, const wxString& path) : m_name(name), m_path(path)
+Catalog::Catalog (const wxString& filename, const wxString& path) : m_filename(filename), m_path(path)
 {
 	m_prefixList.Clear ();
+	ReadHeader ();
 }
 
 Catalog::~Catalog()
 {
+	m_cache.Clear ();
+	m_prefixList.Clear();
 }
 
 void Catalog::LoadCache ()
 {
 	m_cache.Clear();
-	wxFileName fn (m_path, m_name);
-	fn.SetExt ("csv");
+	wxFileName fn (m_path, m_filename);
+//	fn.SetExt ("csv");
 	wxFileInputStream fis (fn.GetFullPath());
 	if (!fis.IsOk()) {
 		wxLogDebug ("File not found: " + fn.GetFullPath());
 		return;
 		}
 
+	setlocale (LC_NUMERIC, "C");
 	wxTextInputStream tis (fis);
 	wxString line;
 	wxStringTokenizer stk;
@@ -40,48 +49,79 @@ void Catalog::LoadCache ()
 	Target newTarget;
 	long expTime;
 	long expCount;
+
+	wxArrayString arrLine;
+	long ixObjectName = 0;
+	long ixRa = 1;
+	long ixDecl = 2;
+	long ixExposureCount = -1;
+	long ixExposureTime = -1;
+	bool raSexa = true;
+	bool declSexa = true;
+
 	while (!fis.Eof()) {
 		line = tis.ReadLine ();
 		if (line == "")
 			continue;
+
+		arrLine = wxStringTokenize (line, ";\n");
+
+		// field descriptor header lines
+		if (arrLine[0].GetChar(0) == '#') {
+			if (arrLine[0] == "#OBJECT_NAME") {
+				arrLine[1].ToLong (&ixObjectName);
+				}
+			else if (arrLine[0] == "#RA") {
+				arrLine[1].ToLong (&ixRa);
+				raSexa = (arrLine[2] == "SEXA");
+				}
+			else if (arrLine[0] == "#DECL") {
+				arrLine[1].ToLong (&ixDecl);
+				declSexa = (arrLine[2] == "SEXA");
+				}
+			else if (arrLine[0] == "#EXPOSURE_COUNT") {
+				arrLine[1].ToLong (&ixExposureCount);
+				}
+			else if (arrLine[0] == "#EXPOSURE_TIME") {
+				arrLine[1].ToLong (&ixExposureTime);
+				}
+			continue;
+			}
 	
-//		wxStringTokenizer stk (line, ";");
-		stk.SetString (line, ";");
-		name = stk.GetNextToken ();
+		// normal data lines
+		name = arrLine[ixObjectName];
 		if (name == "")
 			continue;
 
-		sRa = stk.GetNextToken ();
-		sDecl = stk.GetNextToken ();
-		if (sRa == "" || sDecl == "")
-			continue;
+		if (arrLine.GetCount() > ixRa) {
+			sRa = arrLine[ixRa];
+			sDecl = arrLine[ixDecl];
+			if (sRa == "" || sDecl == "")
+				continue;
 
-		expTime = 0;
-		expCount = 0;
-		if (stk.HasMoreTokens()) {
-			sFrameCount = stk.GetNextToken ();
-			sExpTime = stk.GetNextToken ();
-			if (!sFrameCount.ToLong (&expCount))
-				expCount = 0;
-			if (!sExpTime.ToLong (&expTime))
-				expTime = 0;
-			}
-		coord.FromString (sRa, sDecl);
-//		Target* newTarget = new Target (name, coord);
-		newTarget.SetName (name);
-		newTarget.SetCoord (coord);
-		if (expCount != 0 && expTime != 0) {
-//			newTarget->SetExposureCount (expCount);
-//			newTarget->SetExposureTime (expTime);
+			expTime = 0;
+			expCount = 0;
+			if (ixExposureCount != -1) {
+				arrLine[ixExposureCount].ToLong (&expCount);
+				}
+			if (ixExposureTime != -1) {
+				arrLine[ixExposureTime].ToLong (&expTime);
+				}
+
+			newTarget.SetName (name);
+			if (raSexa) {
+				Coordinate c;
+				c.FromString (sRa, sDecl);
+				newTarget.SetCoord (c);
+				}
+			else {
+				newTarget.SetCoord (Coordinate (wxAtof (sRa), wxAtof (sDecl)));
+				}
 			newTarget.SetExposureCount (expCount);
 			newTarget.SetExposureTime (expTime);
+	
+			m_cache.Add (newTarget);
 			}
-		else {
-			newTarget.SetExposureCount (0);
-			newTarget.SetExposureTime (0);
-			}
-//		m_cache.Add (*newTarget);
-		m_cache.Add (newTarget);
 		}
 }
 
@@ -137,3 +177,34 @@ bool Catalog::MatchPrefix (const wxString& objectName)
 }
 
 
+
+void Catalog::ReadHeader()
+{
+	wxFileName fn (m_path, m_filename);
+	wxFileInputStream fis (fn.GetFullPath());
+	if (!fis.IsOk()) {
+		wxLogDebug ("File not found: " + fn.GetFullPath());
+		return;
+		}
+
+	wxTextInputStream tis (fis);
+	wxString line;
+	wxArrayString arrLine;
+	while (!fis.Eof()) {
+		line = tis.ReadLine ();
+		if (line == "")
+			continue;
+		if (line.GetChar (0) == '#') {
+			arrLine = wxStringTokenize (line, ";\n");
+			if (arrLine[0] == "#CATALOG_NAME") {
+				SetName (arrLine[1]);
+				}
+			else if (arrLine[0] == "#CATALOG_PREFIX") {
+				AddPrefix (arrLine[1]);
+				}
+			}
+		else {
+			break;
+			}
+		}
+}

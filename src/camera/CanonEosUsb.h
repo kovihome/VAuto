@@ -18,8 +18,8 @@ class CanonEosUsb :
 	public Camera
 {
 public:
-	CanonEosUsb();
-	CanonEosUsb(const wxString& port);
+	CanonEosUsb(bool needInit = true);
+	CanonEosUsb(const wxString& port, bool needInit = true);
 	~CanonEosUsb();
 
 	wxString GetCameraType ();
@@ -40,6 +40,22 @@ private:
 	bool DoTermShoot ();
 	bool DoStartMLU ();
 	bool DoTermMLU ();
+	bool Connect(void);
+	bool Disconnect(void);
+	wxString GetPropertyValueString(EdsPropertyID propId);
+	unsigned long GetPropertyValueLong(EdsPropertyID propId);
+	void SetPropertyValueLong(EdsPropertyID propId, unsigned long value);
+	unsigned long GetCFnValueLong (unsigned long cfn);
+	void SetCameraTime();
+protected:
+	wxString GetLastImageFileName(void);
+private:
+	unsigned long m_isoSpeedOriginal;
+public:
+	unsigned long GetIsoSpeed();				// Read the ISO speed from the camera
+	bool SetIsoSpeed(unsigned long isoSpeed);	// Sets the camera ISO speed
+	double GetShutterSpeed ();					// Reads the shutterspeed from the camera
+	bool SetShutterSpeed (double shutterSpeed);	// Sets the camera shutter speed
 };
 
 #endif // _CANON_EOS_USB_H_

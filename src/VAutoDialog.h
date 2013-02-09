@@ -42,6 +42,7 @@ private:
 	wxStaticText* m_DisplayDecl;
 	wxStaticText* m_PlanFile;
 	wxStaticText* m_StatusBar;
+	wxStaticText* m_StatusCoords;
 	wxButton* m_MoveButton;
 	wxButton* m_ShootButton;
 	wxButton* m_AbortButton;
@@ -107,9 +108,12 @@ private:
 	bool DoMove ();
 	bool DoShoot ();
 
+	bool IsTargetAboveHorizon (Target& target);
+
 
 	void Log(wxString& status, int frameCount = -1);
 	void SetStatusText(const wxString& text);
+	void SetStatusCoords(const wxString& text);
 	void StartExposition(bool fileControlled);
 	bool NextPlanTarget();
 

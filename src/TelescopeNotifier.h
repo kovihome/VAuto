@@ -23,7 +23,8 @@ public:
 		STOP_NORMALLY = 0,
 		STOP_DISCONNECT,
 		STOP_TIMEOUT,
-		STOP_ABORT
+		STOP_ABORT,
+		DISPLAY_COORD
 	};
 private:
 	Telescope* m_telescope;
@@ -37,6 +38,7 @@ public:
 	void Abort ();
 private:
 	void SendEvent (TelescopeNotifier::TelescopeStopAction stopAction);
+	void SendCoord ();
 	ExitCode Entry ();
 };
 

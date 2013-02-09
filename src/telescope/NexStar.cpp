@@ -1,8 +1,11 @@
+#ifdef __WXMSW__
+    #include <wx/msw/msvcrt.h>      // redefines the new() operator 
+#endif 
+
+#include "../common.h"
 #include "NexStar.h"
 
-#define SIMULATE_CONNECTION 1
-
-#if SIMULATE_CONNECTION == 1
+#if SIMULATE_CONNECTION_TELESCOPE == 1
 static bool moving = FALSE;
 static wxDateTime moveuntil;
 #endif
@@ -26,7 +29,7 @@ wxString NexStar::GetModel ()
 bool NexStar::IsConnected ()
 {
 	wxLogDebug (wxString::Format ("NexStar::IsConnected send command: Kx"));
-#if SIMULATE_CONNECTION == 0
+#if SIMULATE_CONNECTION_TELESCOPE == 0
 	wxString answer = SendCommand ("Kx", 2);
 #else
 	wxString answer = "x#";
@@ -38,7 +41,7 @@ bool NexStar::IsConnected ()
 wxString NexStar::GetVersion ()
 {
 	wxLogDebug (wxString::Format ("NexStar::GetVersion send command: V"));
-#if SIMULATE_CONNECTION == 0
+#if SIMULATE_CONNECTION_TELESCOPE == 0
 	wxString answer = SendCommand ("V", 3);
 #else
 	wxString answer = "22#";
@@ -50,7 +53,7 @@ wxString NexStar::GetVersion ()
 bool NexStar::IsAligned ()
 {
 	wxLogDebug (wxString::Format ("NexStar::IsAligned send command: J"));
-#if SIMULATE_CONNECTION == 0
+#if SIMULATE_CONNECTION_TELESCOPE == 0
 	wxString answer = SendCommand ("J", 2);
 #else
 	wxString answer = "\x01#";
@@ -62,7 +65,7 @@ bool NexStar::IsAligned ()
 bool NexStar::IsMoving ()
 {
 	wxLogDebug (wxString::Format ("NexStar::IsMoving send command: L"));
-#if SIMULATE_CONNECTION == 0
+#if SIMULATE_CONNECTION_TELESCOPE == 0
 	wxString answer = SendCommand ("L", 2);
 #else
 	wxString answer;
@@ -82,14 +85,16 @@ Coordinate& NexStar::GetEquatorialCoords ()
 {
 	Coordinate* coord = new Coordinate ();
 	wxLogDebug (wxString::Format ("NexStar::GetEquatorialCoords send command: e"));
-#if SIMULATE_CONNECTION == 0
+#if SIMULATE_CONNECTION_TELESCOPE == 0
 	wxString answer = SendCommand ("e", 18);
 #else
-	wxString answer = "12345600,12345600#";
+//	wxString answer = "12345600,12345600#";
+//	wxString answer = "A8A5E100,1404D600#";
+	wxString answer = "A8C0DA00,FD233200#";
 #endif
 	wxLogDebug (wxString::Format ("NexStar::GetEquatorialCoords recieve answer: %s", answer));
 	if (answer.Length() > 0) {
-		coord->FromHex24 (answer.Left (6), answer.Mid (9, 15));
+		coord->FromHex24 (answer.Left (6), answer.Mid (9, 6));
 		}
 	return *coord;
 }
@@ -100,7 +105,7 @@ void NexStar::MoveToEquatorialCoords (Coordinate& coord)
 	coord.ToHex24(sRa, sDecl);
 	wxString command = "r" + sRa + "00," + sDecl + "00";
 	wxLogDebug (wxString::Format ("NexStar::MoveToEquatorialCoords send command: %s", command));
-#if SIMULATE_CONNECTION == 0
+#if SIMULATE_CONNECTION_TELESCOPE == 0
 	wxString answer = SendCommand (command, 1);
 #else
 	moving = TRUE;
@@ -114,7 +119,7 @@ void NexStar::MoveToEquatorialCoords (Coordinate& coord)
 void NexStar::StopMoving ()
 {
 	wxLogDebug (wxString::Format ("NexStar::StopMoving send command: M"));
-#if SIMULATE_CONNECTION == 0
+#if SIMULATE_CONNECTION_TELESCOPE == 0
 	wxString answer = SendCommand ("M", 1);
 #else
 	moving = FALSE;

@@ -1,5 +1,8 @@
+#ifdef __WXMSW__
+    #include <wx/msw/msvcrt.h>      // redefines the new() operator 
+#endif 
+
 #include "Camera.h"
-#include "OptionsDialog.h"
 #include "ObservationLog.h"
 #include "../../VTools/src/Properties.h"
 
@@ -9,17 +12,19 @@ void CameraShootTimer::Notify ()
 	m_CameraController->DoNextShootingAction ();
 }
 
-Camera::Camera(const wxString& port)
+Camera::Camera(const wxString& port, bool needInit)
 	: m_port(port), m_ShootTimer(this)
 {
+	m_initialzed = needInit;
 }
 
-Camera::Camera(const Camera& camera)
+Camera::Camera(const Camera& camera, bool needInit)
 	: m_ShootTimer(this)
 {
+	m_initialzed = needInit;
 }
 
-Camera::~Camera(void)
+Camera::~Camera()
 {
 }
 
@@ -95,6 +100,7 @@ void Camera::ShootMany (long frameCount, long exposureTime, long delayBeforeShoo
 		else {
 			m_shootingState = CSS_MLU;
 			if (!DoStartMLU()) {
+				DoTermShoot ();
 				m_shootingState = CSS_READY;
 				return;
 				}
@@ -207,7 +213,8 @@ void Camera::DoNextShootingAction ()
 			*/
 			ObservationLog::Instance().SetStatus (LOG_STATUS_OK);
 			ObservationLog::Instance().Flush ();
-
+			
+			// this was the last frame, finish making frames
 			if (++m_currentFrame == m_frameCount) {
 				if (m_useMLU)
 					DoTermMLU ();
@@ -215,6 +222,7 @@ void Camera::DoNextShootingAction ()
 				m_shootingState = CSS_READY;
 				break;
 				}
+			// use MLU before next frame, if needed
 			else if (m_useMLU && m_mluBeforeEveryFrame) {
 				DoTermMLU();
 				if (m_delayBeforeMLU > 0) {

@@ -1,3 +1,7 @@
+#ifdef __WXMSW__
+    #include <wx/msw/msvcrt.h>      // redefines the new() operator 
+#endif 
+
 #include "CameraNotifier.h"
 
 CameraNotifier::CameraNotifier(wxWindow* parent, int id, Camera* camera, int exposureTime)
@@ -13,7 +17,6 @@ static wxString shutterStateNames[] = {"ready", "mirror lockup", "wait before mi
 
 void CameraNotifier::SendEvent (CameraNotifier::CameraShootAction shootAction, int currentTime)
 {
-	wxLogDebug (wxT("CameraNotifier post a notification event."));
 	wxCommandEvent ev (wxEVT_COMMAND_BUTTON_CLICKED, m_id);
 	ev.SetInt (shootAction);
 	if (shootAction == CameraNotifier::SHOOT_NOTIFY_TIME) {
@@ -64,11 +67,9 @@ wxThread::ExitCode CameraNotifier::Entry ()
 
 	CameraNotifier::CameraShootAction shootAction;
 	if (m_abort) {
-		m_camera->AbortShooting (); // force the camera stops shooting
 		shootAction = CameraNotifier::SHOOT_ABORT;
 		}
 	else if (timeout <= 0) {
-		m_camera->AbortShooting (); // force the camera stops shooting
 		shootAction = CameraNotifier::SHOOT_TIMEOUT;
 		}
 	else {

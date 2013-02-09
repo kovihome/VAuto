@@ -18,8 +18,8 @@ class CanonEosShutter :
 	public Camera
 {
 public:
-	CanonEosShutter() : Camera() {}
-	CanonEosShutter(const wxString& port) : Camera(port) {}
+	CanonEosShutter(bool needInit = true) : Camera(needInit) {}
+	CanonEosShutter(const wxString& port, bool needInit = true) : Camera(port, needInit) {}
 	~CanonEosShutter();
 	wxString GetCameraType ();
 	bool HasFeature (DriverFeature feature);

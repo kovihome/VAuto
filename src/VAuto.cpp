@@ -1,7 +1,13 @@
+#ifdef __WXMSW__
+    #include <wx/msw/msvcrt.h>      // redefines the new() operator 
+#endif 
+
 #include <wx/wx.h>
 #include <wx/xrc/xmlres.h>
 #include <wx/intl.h>
 #include "VAutoDialog.h"
+
+extern void InitXmlResource();		// defined in VAutoResources.cpp
 
 class VAutoApp : public wxApp
 {
@@ -17,9 +23,9 @@ bool VAutoApp::OnInit()
     wxImage::AddHandler(new wxGIFHandler);
 	wxImage::AddHandler(new wxPNGHandler);
     wxXmlResource::Get()->InitAllHandlers();
-	wxString resFile = _T("res/VAuto.xrc");
-    wxXmlResource::Get()->Load(resFile);
-
+	InitXmlResource();
+//	wxString resFile = _T("res/VAuto.xrc");
+//	wxXmlResource::Get()->Load(resFile);
 
 	wxLocale* locale = new wxLocale ();
 	locale->Init(wxLocale::GetSystemLanguage());

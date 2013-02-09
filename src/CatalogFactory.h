@@ -12,6 +12,7 @@ private:
 	CatalogFactory();
 	CatalogFactory(CatalogFactory&);
 	CatalogFactory& operator= (CatalogFactory&);
+	virtual ~CatalogFactory();
 
 	static CatalogFactory* instance;
 	CatalogPool m_pool;
@@ -20,4 +21,6 @@ public:
 	Catalog& Add (const wxString& catalogName, const wxString& path);
 	Catalog& Get (const wxString& catalogName, const wxString& path);
 	Target& FindObject (const wxString& objectName);
+	int AddAll(const wxString& extension, const wxString& path);
+	Catalog& Open(const wxString& catalogName, const wxString& path);
 };

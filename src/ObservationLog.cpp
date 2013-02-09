@@ -1,3 +1,7 @@
+#ifdef __WXMSW__
+    #include <wx/msw/msvcrt.h>      // redefines the new() operator 
+#endif 
+
 #include <wx/filename.h>
 #include "ObservationLog.h"
 
@@ -51,6 +55,11 @@ void ObservationLog::SetStatus (const wxString& status)
 	m_Status = status;
 }
 
+void ObservationLog::SetFrameStackId (int stackId)
+{
+	m_FrameStackId = stackId;
+}
+
 
 void ObservationLog::Flush ()
 {
@@ -58,7 +67,8 @@ void ObservationLog::Flush ()
 		m_TargetName = "unknown object";
 	wxString ra, decl;
 	m_Coord.ToString (ra, decl);
-	wxString logText = wxString::Format ("%s;%s;%s;%s;%d;%d;%s\n",
+	wxString logText = wxString::Format ("%d;%s;%s;%s;%s;%d;%d;%s\n",
+		m_FrameStackId,
 		m_TargetName, 
 		ra,
 		decl,
@@ -74,13 +84,17 @@ void ObservationLog::Flush ()
 void ObservationLog::SetPath (const wxString& path)
 {
 	wxDateTime d = wxDateTime::Now(); 
-	wxString fileName = wxString::Format ("vauto-%04d%02d%02d", d.GetYear(), d.GetMonth(), d.GetDay());
-	wxFileName fn (path, fileName, wxT(".log"));
+	wxString fileName = wxString::Format ("vauto-%04d%02d%02d", d.GetYear(), d.GetMonth() + 1, d.GetDay());
+	wxFileName fn (path, fileName, wxT("log"));
 	int k = 1;
 	while (wxFileName::FileExists (fn.GetFullPath())) {
 		fn.SetName (wxString::Format ("%s-%d", fileName, k++));
 		}
 	m_FileName = fn.GetFullPath();
+
+	wxFile logf (m_FileName, wxFile::write_append);
+	logf.Write ("#VAuto Observation Log\n");
+	logf.Close ();
 }
 
 void ObservationLog::Clear ()

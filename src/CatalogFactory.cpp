@@ -1,5 +1,10 @@
+#ifdef __WXMSW__
+    #include <wx/msw/msvcrt.h>      // redefines the new() operator 
+#endif 
+
 #include "CatalogFactory.h"
 #include <wx/arrimpl.cpp>
+#include <wx/dir.h>
 
 WX_DEFINE_OBJARRAY (CatalogPool);
 
@@ -19,10 +24,18 @@ CatalogFactory::CatalogFactory()
 {
 }
 
+CatalogFactory::~CatalogFactory()
+{
+	m_pool.Clear ();
+}
+
+
+
 Catalog& CatalogFactory::Add (const wxString& catalogName, const wxString& path)
 {
 	Catalog* newCatalog = new Catalog (catalogName, path);
 	m_pool.Add (*newCatalog);
+	wxLogDebug ("Catalog added to the catalog pool: %s", newCatalog->GetName ());
 	return *newCatalog;
 }
 
@@ -50,4 +63,34 @@ Target& CatalogFactory::FindObject (const wxString& objectName)
 		}
 
 	return *new Target ();
+}
+
+int CatalogFactory::AddAll(const wxString& extension, const wxString& path)
+{
+	int catalogCount = 0;
+	wxString ext = extension;
+
+	if (!extension.Contains ("."))
+		ext = wxT("*.") + extension;
+	else if (extension.StartsWith ("."))
+		ext = wxT("*") + extension;
+
+	wxDir catalogDir (path);
+	wxString catalogFileName;
+
+	bool cont = catalogDir.GetFirst (&catalogFileName, ext, wxDIR_FILES);
+	while (cont) {
+		Add (catalogFileName, path);
+		catalogCount++;
+		cont = catalogDir.GetNext (&catalogFileName);
+		}
+
+	return catalogCount;
+}
+
+Catalog& CatalogFactory::Open(const wxString& catalogName, const wxString& path)
+{
+	Catalog* newCatalog = new Catalog (catalogName, path);
+	wxLogDebug ("Catalog opened: %s", newCatalog->GetName ());
+	return *newCatalog;
 }

@@ -12,6 +12,7 @@
 #define _COORDINATE_H_
 
 #include <wx/wx.h>
+#include "Station.h"
 
 class Coordinate
 {
@@ -25,6 +26,14 @@ public:
 	void ToString (wxString& ra, wxString& decl);
 	void ToStringEq (wxString& ra, wxString& decl);
 	void FromString (wxString& ra, wxString& decl);
+
+	double RangeDegrees (double angle);
+	double MeanGST (double jd);
+	double MeanLST (Station& station, double jd);
+	void EquatorialToHorizontal (Station& station, double ha, double decl, double* az, double* h);
+	bool AboveHorizon (Station& station, double jd);
+	double GetAltitude (Station& station, double jd);
+
 private:
 	double _ra;
 	double _decl;

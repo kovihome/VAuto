@@ -1,3 +1,7 @@
+#ifdef __WXMSW__
+    #include <wx/msw/msvcrt.h>      // redefines the new() operator 
+#endif 
+
 #include "SynScan2.h"
 
 SynScan2::SynScan2(wxString comPort)
